@@ -22,7 +22,7 @@
         {{#user}}
             <span class="mx-3">포인트 : {{user.point}}</span>
             <span class="mx-3">{{user.nickname}}님 안녕하세요!</span>
-            <a href="/logout" class="btn btn-outline-dark">로그아웃</a>
+        <a href="/logout" class="btn btn-outline-dark">
             <a href="/modify" class="btn btn-outline-dark bi bi-gear"></a>
         {{/user}}
         {{^user}}
@@ -31,5 +31,7 @@
             <a href="/auth/login" role="button" class="btn btn-outline-dark bi bi-lock-fill"> 로그인</a>
             <a href="/auth/join" role="button" class="btn btn-outline-dark bi bi-person-circle"> 회원가입</a>
         {{/user}}
+        <a href="/" class="btn btn-outline-dark">자유게시판</a>
+        <a href="/secrets" class="btn btn-outline-dark">비밀게시판</a>
     </div>
 </nav>

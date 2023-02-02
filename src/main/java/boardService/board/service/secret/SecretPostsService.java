@@ -1,14 +1,14 @@
-package boardService.board.service;
+package boardService.board.service.secret;
 
-import boardService.board.domain.Likes;
-import boardService.board.domain.Posts;
 import boardService.board.domain.Role;
 import boardService.board.domain.User;
-import boardService.board.dto.PostsDto;
+import boardService.board.domain.secret.SecretLikes;
+import boardService.board.domain.secret.SecretPosts;
 import boardService.board.dto.UserDto;
-import boardService.board.repository.LikesRepository;
-import boardService.board.repository.PostsRepository;
+import boardService.board.dto.secret.SecretPostsDto;
 import boardService.board.repository.UserRepository;
+import boardService.board.repository.secret.SecretLikesRepository;
+import boardService.board.repository.secret.SecretPostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,19 +16,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
-public class PostsService {
+@RequiredArgsConstructor
+public class SecretPostsService {
 
-    private final PostsRepository postsRepository;
+    private final SecretPostsRepository secretPostsRepository;
     private final UserRepository userRepository;
-    private final LikesRepository likeRepository;
+    private final SecretLikesRepository secretLikesRepository;
 
     @Transactional
-    public long save(PostsDto.Request dto, String nickname){
+    public long save(SecretPostsDto.Request dto, String nickname){
         User user = userRepository.findByNickname(nickname);
         user.setPoint(user.getPoint() + 100);
         if(user.getPoint() >= 200){
@@ -39,30 +38,30 @@ public class PostsService {
             }
         }
         dto.setUser(user);
-        Posts posts = dto.toEntity();
-        postsRepository.save(posts);
-        return posts.getId();
+        SecretPosts secretPosts = dto.toEntity();
+        secretPostsRepository.save(secretPosts);
+        return secretPosts.getId();
     }
 
     @Transactional(readOnly = true)
-    public PostsDto.Response findById(long id){
-        Posts posts = postsRepository.findById(id).orElseThrow(() ->
+    public SecretPostsDto.Response findById(long id){
+        SecretPosts secretPosts = secretPostsRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 게시글이 존재하지 않습니다. " + id));
-        return new PostsDto.Response(posts);
+        return new SecretPostsDto.Response(secretPosts);
     }
 
     @Transactional
-    public void update(long id, PostsDto.Request dto){
-        Posts posts = postsRepository.findById(id).orElseThrow(() ->
+    public void update(long id, SecretPostsDto.Request dto){
+        SecretPosts secretPosts = secretPostsRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 게시글이 존재하지 않습니다. " + id));
-        posts.update(dto.getTitle(), dto.getContent());
+        secretPosts.update(dto.getTitle(), dto.getContent());
     }
 
     @Transactional
     public void delete(long id){
-        Posts posts = postsRepository.findById(id).orElseThrow(() ->
+        SecretPosts secretPosts = secretPostsRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 게시글이 존재하지 않습니다. " + id));
-        User user = posts.getUser();
+        User user = secretPosts.getUser();
         user.setPoint(user.getPoint() - 100);
         if(user.getPoint() < 200){
             if(user.getRole().equals(Role.USER_VIP)) {
@@ -71,44 +70,44 @@ public class PostsService {
                 user.setRole(Role.SOCIAL);
             }
         }
-        postsRepository.delete(posts);
+        secretPostsRepository.delete(secretPosts);
     }
 
     @Transactional
     public void updateView(long id){
-        postsRepository.updateView(id);
+        secretPostsRepository.updateView(id);
     }
 
     @Transactional(readOnly = true)
-    public Page<Posts> pageList(Pageable pageable){
-        return postsRepository.findAll(pageable);
+    public Page<SecretPosts> pageList(Pageable pageable){
+        return secretPostsRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
-    public Page<Posts> search(String keyword, Pageable pageable){
-        return postsRepository.findByTitleContaining(keyword, pageable);
+    public Page<SecretPosts> search(String keyword, Pageable pageable){
+        return secretPostsRepository.findByTitleContaining(keyword, pageable);
     }
 
     @Transactional
     public void like(long id, UserDto.Response dto) {
         User user = userRepository.findByUsername(dto.getUsername()).orElseThrow(() ->
                 new UsernameNotFoundException("찾을 수 없는 사용자입니다."));
-        Posts posts = postsRepository.findById(id).orElseThrow(() ->
+        SecretPosts secretPosts = secretPostsRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("찾을 수 없는 게시글입니다."));
-        Optional<Likes> likes = likeRepository.findByUserAndPosts(user, posts);
+        Optional<SecretLikes> likes = secretLikesRepository.findByUserAndPosts(user, secretPosts);
         if(likes.isEmpty()) {
-            Likes entity = Likes.builder()
+            SecretLikes entity = SecretLikes.builder()
                     .user(user)
-                    .posts(posts)
+                    .posts(secretPosts)
                     .likes(true)
                     .build();
-            likeRepository.save(entity);
-            postsRepository.updateLikeCount(id);
+            secretLikesRepository.save(entity);
+            secretPostsRepository.updateLikeCount(id);
         }
         else{
-            likeRepository.delete(likeRepository.findByUser(user));
+            secretLikesRepository.delete(secretLikesRepository.findByUser(user));
             if(likes.get().isLikes()){
-                postsRepository.updateLikeCountOf(id);
+                secretPostsRepository.updateLikeCountOf(id);
             }
         }
     }
@@ -116,22 +115,22 @@ public class PostsService {
     public void disLike(long id, UserDto.Response dto) {
         User user = userRepository.findByUsername(dto.getUsername()).orElseThrow(() ->
                 new UsernameNotFoundException("찾을 수 없는 사용자입니다."));
-        Posts posts = postsRepository.findById(id).orElseThrow(() ->
+        SecretPosts secretPosts = secretPostsRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("찾을 수 없는 게시글입니다."));
-        Optional<Likes> likes = likeRepository.findByUserAndPosts(user, posts);
+        Optional<SecretLikes> likes = secretLikesRepository.findByUserAndPosts(user, secretPosts);
         if(likes.isEmpty()) {
-            Likes entity = Likes.builder()
+            SecretLikes entity = SecretLikes.builder()
                     .user(user)
-                    .posts(posts)
+                    .posts(secretPosts)
                     .disLikes(true)
                     .build();
-            likeRepository.save(entity);
-            postsRepository.updateDisLikeCount(id);
+            secretLikesRepository.save(entity);
+            secretPostsRepository.updateDisLikeCount(id);
         }
         else{
-            likeRepository.delete(likeRepository.findByUser(user));
+            secretLikesRepository.delete(secretLikesRepository.findByUser(user));
             if(likes.get().isDisLikes()){
-                postsRepository.updateDisLikeCountOf(id);
+                secretPostsRepository.updateDisLikeCountOf(id);
             }
         }
     }

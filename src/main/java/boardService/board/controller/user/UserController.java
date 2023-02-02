@@ -1,4 +1,4 @@
-package boardService.board.controller;
+package boardService.board.controller.user;
 
 import boardService.board.dto.UserDto;
 import boardService.board.security.auth.LoginUser;

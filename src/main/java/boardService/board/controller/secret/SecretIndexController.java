@@ -1,34 +1,36 @@
-package boardService.board.controller;
+package boardService.board.controller.secret;
 
-import boardService.board.domain.Posts;
-import boardService.board.dto.CommentDto;
-import boardService.board.dto.PostsDto;
+import boardService.board.domain.secret.SecretPosts;
+import boardService.board.dto.post.CommentDto;
+import boardService.board.dto.secret.SecretCommentDto;
+import boardService.board.dto.secret.SecretPostsDto;
 import boardService.board.dto.UserDto;
 import boardService.board.security.auth.LoginUser;
-import boardService.board.service.PostsService;
+import boardService.board.service.secret.SecretPostsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Objects;
 
-@RequiredArgsConstructor
 @Controller
-public class PostIndexController {
+@RequiredArgsConstructor
+public class SecretIndexController {
 
-    private final PostsService postsService;
+    private final SecretPostsService secretPostsService;
 
-    @GetMapping("/")
-    public String index(Model model, @PageableDefault(sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
+    @GetMapping("/secrets")
+    public String index(Model model, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                         @LoginUser UserDto.Response user){
-        Page<Posts> pages = postsService.pageList(pageable);
+        Page<SecretPosts> pages = secretPostsService.pageList(pageable);
         if(user != null){
             model.addAttribute("user", user);
         }
@@ -37,57 +39,57 @@ public class PostIndexController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", pages.hasNext());
         model.addAttribute("hasPrev", pages.hasPrevious());
-        return "index";
+        return "/secrets/index";
     }
 
-    @GetMapping("/posts/write")
+    @GetMapping("/secrets/posts/write")
     public String write(@LoginUser UserDto.Response user, Model model){
         if(user != null){
             model.addAttribute("user", user);
         }
-        return "posts/posts-write";
+        return "posts-write";
     }
 
-    @GetMapping("/posts/read/{id}")
+    @GetMapping("/secrets/posts/read/{id}")
     public String read(@PathVariable long id, @LoginUser UserDto.Response dto, Model model) {
-        PostsDto.Response post = postsService.findById(id);
-        List<CommentDto.Response> comments = post.getComments();
+        SecretPostsDto.Response secretPosts = secretPostsService.findById(id);
+        List<SecretCommentDto.Response> secretComment = secretPosts.getComments();
 
-        if (comments != null && !comments.isEmpty()) {
-            model.addAttribute("comments", comments);
+        if (secretComment != null && !secretComment.isEmpty()) {
+            model.addAttribute("comments", secretComment);
         }
         if (dto != null) {
             model.addAttribute("user", dto);
-            if (post.getUserId().equals(dto.getId())) {
+            if (secretPosts.getUserId().equals(dto.getId())) {
                 model.addAttribute("writer", true);
             }
-            if (comments.stream().anyMatch(r -> r.getUserId().equals(dto.getId()))) {
+            if (secretComment.stream().anyMatch(r -> r.getUserId().equals(dto.getId()))) {
                 model.addAttribute("isWriter", true);
             }
         }
         if(dto != null){
-            if(!Objects.equals(post.getUserId(), dto.getId())) {
-                postsService.updateView(id); //자신이 조회하는건 조회수 증가x
+            if(!Objects.equals(secretPosts.getUserId(), dto.getId())) {
+                secretPostsService.updateView(id); //자신이 조회하는건 조회수 증가x
             }
         }
-        model.addAttribute("posts", post);
-        return "posts/posts-read";
+        model.addAttribute("posts", secretPosts);
+        return "posts-read";
     }
 
-    @GetMapping("/posts/update/{id}")
+    @GetMapping("/secrets/posts/update/{id}")
     public String update(@PathVariable long id, @LoginUser UserDto.Response user, Model model){
-        PostsDto.Response dto = postsService.findById(id);
+        SecretPostsDto.Response secretPosts = secretPostsService.findById(id);
         if(user != null){
             model.addAttribute("user", user);
         }
-        model.addAttribute("posts", dto);
-        return "posts/posts-update";
+        model.addAttribute("posts", secretPosts);
+        return "posts-update";
     }
 
-    @GetMapping("/posts/search")
+    @GetMapping("/secrets/posts/search")
     public String search(String keyword, Model model, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                          @LoginUser UserDto.Response user){
-        Page<Posts> pages = postsService.search(keyword, pageable);
+        Page<SecretPosts> pages = secretPostsService.search(keyword, pageable);
         if(user != null){
             model.addAttribute("user", user);
         }
@@ -98,6 +100,6 @@ public class PostIndexController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", pages.hasNext());
         model.addAttribute("hasPrev", pages.hasPrevious());
-        return "posts/posts-search";
+        return "posts-search";
     }
 }

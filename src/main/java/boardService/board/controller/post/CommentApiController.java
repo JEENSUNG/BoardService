@@ -1,10 +1,10 @@
-package boardService.board.controller;
+package boardService.board.controller.post;
 
-import boardService.board.dto.CommentDto;
+import boardService.board.dto.post.CommentDto;
 import boardService.board.dto.Result;
 import boardService.board.dto.UserDto;
 import boardService.board.security.auth.LoginUser;
-import boardService.board.service.CommentService;
+import boardService.board.service.post.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

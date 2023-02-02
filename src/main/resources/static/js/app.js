@@ -14,6 +14,18 @@ const main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+        //비밀 게시판 저장
+        $('#btn-secret-save').on('click', function () {
+            _this.secretSave();
+        });
+        // 비밀 게시판 수정
+        $('#btn-secret-update').on('click', function () {
+            _this.secretUpdate();
+        });
+        // 비밀 게시판 삭제
+        $('#btn-secret-delete').on('click', function () {
+            _this.secretDelete();
+        });
 
         // 회원 수정
         $('#btn-user-modify').on('click', function () {

@@ -1,7 +1,7 @@
-package boardService.board.repository;
+package boardService.board.repository.post;
 
-import boardService.board.domain.Likes;
-import boardService.board.domain.Posts;
+import boardService.board.domain.post.Likes;
+import boardService.board.domain.post.Posts;
 import boardService.board.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

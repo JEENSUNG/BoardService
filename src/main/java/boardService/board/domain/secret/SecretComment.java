@@ -1,11 +1,11 @@
-package boardService.board.domain;
+package boardService.board.domain.secret;
 
+import boardService.board.domain.TimeEntity;
+import boardService.board.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 
@@ -13,9 +13,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Table(name = "comments")
+@Table(name = "secretComment")
 @Entity
-public class Comment extends TimeEntity{
+public class SecretComment extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +33,8 @@ public class Comment extends TimeEntity{
 //    private String modifiedDate;
 
     @ManyToOne
-    @JoinColumn(name = "posts_id")
-    private Posts posts;
+    @JoinColumn(name = "secretPosts_id")
+    private SecretPosts posts;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

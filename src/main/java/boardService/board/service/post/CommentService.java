@@ -1,12 +1,12 @@
-package boardService.board.service;
+package boardService.board.service.post;
 
-import boardService.board.domain.Comment;
-import boardService.board.domain.Posts;
+import boardService.board.domain.post.Comment;
+import boardService.board.domain.post.Posts;
 import boardService.board.domain.Role;
 import boardService.board.domain.User;
-import boardService.board.dto.CommentDto;
-import boardService.board.repository.CommentRepository;
-import boardService.board.repository.PostsRepository;
+import boardService.board.dto.post.CommentDto;
+import boardService.board.repository.post.CommentRepository;
+import boardService.board.repository.post.PostsRepository;
 import boardService.board.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

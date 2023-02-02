@@ -1,6 +1,6 @@
-package boardService.board.repository;
+package boardService.board.repository.post;
 
-import boardService.board.domain.Posts;
+import boardService.board.domain.post.Posts;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

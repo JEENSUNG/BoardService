@@ -1,13 +1,14 @@
-package boardService.board.dto;
+package boardService.board.dto.secret;
 
-import boardService.board.domain.Posts;
 import boardService.board.domain.User;
+import boardService.board.domain.secret.SecretPosts;
+import boardService.board.dto.post.CommentDto;
 import lombok.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PostsDto {
+public class SecretPostsDto {
     /** 게시글의 등록과 수정을 처리할 요청(Request) 클래스 */
     @Data
     @AllArgsConstructor
@@ -26,9 +27,9 @@ public class PostsDto {
         private User user;
 
         /* Dto -> Entity */
-        public Posts toEntity() {
+        public SecretPosts toEntity() {
 
-            return Posts.builder()
+            return SecretPosts.builder()
                     .id(id)
                     .title(title)
                     .writer(writer)
@@ -57,21 +58,21 @@ public class PostsDto {
         private final int likeCount;
         private final int disLikeCount;
         private final Long userId;
-        private final List<CommentDto.Response> comments;
+        private final List<SecretCommentDto.Response> comments;
 
         /* Entity -> Dto*/
-        public Response(Posts posts) {
-            this.id = posts.getId();
-            this.title = posts.getTitle();
-            this.writer = posts.getWriter();
-            this.content = posts.getContent();
-            this.createdDate = posts.getCreatedDate();
-            this.modifiedDate = posts.getModifiedDate();
-            this.view = posts.getView();
-            this.likeCount = posts.getLikeCount();
-            this.disLikeCount = posts.getDisLikeCount();
-            this.userId = posts.getUser().getId();
-            this.comments = posts.getComments().stream().map(CommentDto.Response::new).collect(Collectors.toList());
+        public Response(SecretPosts secretPosts) {
+            this.id = secretPosts.getId();
+            this.title = secretPosts.getTitle();
+            this.writer = secretPosts.getWriter();
+            this.content = secretPosts.getContent();
+            this.createdDate = secretPosts.getCreatedDate();
+            this.modifiedDate = secretPosts.getModifiedDate();
+            this.view = secretPosts.getView();
+            this.likeCount = secretPosts.getLikeCount();
+            this.disLikeCount = secretPosts.getDisLikeCount();
+            this.userId = secretPosts.getUser().getId();
+            this.comments = secretPosts.getComments().stream().map(SecretCommentDto.Response::new).collect(Collectors.toList());
         }
     }
 }

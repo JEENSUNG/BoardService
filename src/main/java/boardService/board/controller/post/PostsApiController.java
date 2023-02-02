@@ -1,12 +1,11 @@
-package boardService.board.controller;
+package boardService.board.controller.post;
 
-import boardService.board.dto.PostsDto;
+import boardService.board.dto.post.PostsDto;
 import boardService.board.dto.Result;
 import boardService.board.dto.UserDto;
 import boardService.board.security.auth.LoginUser;
-import boardService.board.service.PostsService;
+import boardService.board.service.post.PostsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,16 +1,11 @@
-package boardService.board.dto;
-import boardService.board.domain.Comment;
-import boardService.board.domain.Posts;
+package boardService.board.dto.secret;
+
 import boardService.board.domain.User;
+import boardService.board.domain.secret.SecretComment;
+import boardService.board.domain.secret.SecretPosts;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-/**
- * request, response DTO 클래스를 하나로 묶어 InnerStaticClass로 한 번에 관리
- */
-public class CommentDto {
+public class SecretCommentDto {
 
     /** 댓글 Service 요청을 위한 DTO 클래스 */
     @Data
@@ -25,11 +20,11 @@ public class CommentDto {
         private String createdDate;
         private String modifiedDate;
         private User user;
-        private Posts posts;
+        private SecretPosts posts;
         /* Dto -> Entity */
-        public Comment toEntity() {
+        public SecretComment toEntity() {
 
-            return Comment.builder()
+            return SecretComment.builder()
                     .id(id)
                     .comment(comment)
 //                    .createdDate(createdDate)
@@ -58,14 +53,14 @@ public class CommentDto {
         private final Long userId;
         private final Long postsId;
         /* Entity -> Dto*/
-        public Response(Comment comment) {
-            this.id = comment.getId();
-            this.comment = comment.getComment();
-            this.createdDate = comment.getCreatedDate();
-            this.modifiedDate = comment.getModifiedDate();
-            this.nickname = comment.getUser().getNickname();
-            this.userId = comment.getUser().getId();
-            this.postsId = comment.getPosts().getId();
+        public Response(SecretComment secretComment) {
+            this.id = secretComment.getId();
+            this.comment = secretComment.getComment();
+            this.createdDate = secretComment.getCreatedDate();
+            this.modifiedDate = secretComment.getModifiedDate();
+            this.nickname = secretComment.getUser().getNickname();
+            this.userId = secretComment.getUser().getId();
+            this.postsId = secretComment.getPosts().getId();
         }
     }
 }
