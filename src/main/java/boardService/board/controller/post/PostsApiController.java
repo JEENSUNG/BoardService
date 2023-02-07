@@ -1,5 +1,6 @@
 package boardService.board.controller.post;
 
+import boardService.board.domain.User;
 import boardService.board.dto.post.PostsDto;
 import boardService.board.dto.Result;
 import boardService.board.dto.UserDto;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RequestMapping("/api")
 @RequiredArgsConstructor
 @RestController
@@ -17,9 +20,11 @@ public class PostsApiController {
     private final PostsService postsService;
 
     @PostMapping("/posts")
-    public ResponseEntity<?> save(@RequestBody PostsDto.Request dto, @LoginUser UserDto.Response user) {
+    public ResponseEntity<?> save(@RequestBody PostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
         long id = postsService.save(dto, user.getNickname());
         boolean isVip = postsService.check(user.getId());
+        UserDto.Response entity = postsService.session(user.getUsername());
+        httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(new Result<>(id, isVip));
     }
 
@@ -35,8 +40,10 @@ public class PostsApiController {
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id){
+    public ResponseEntity<?> delete(@PathVariable long id, @LoginUser UserDto.Response user, HttpSession httpSession){
         postsService.delete(id);
+        UserDto.Response entity = postsService.session(user.getUsername());
+        httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(id);
     }
 

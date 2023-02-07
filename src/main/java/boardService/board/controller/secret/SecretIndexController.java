@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +24,13 @@ import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/secrets")
+//@PreAuthorize("hasAnyRole({'ROLE_VIP', 'ROLE_SOCIAL_VIP'})")
 public class SecretIndexController {
 
     private final SecretPostsService secretPostsService;
 
-    @GetMapping("/secrets")
+    @GetMapping()
     public String index(Model model, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                         @LoginUser UserDto.Response user){
         Page<SecretPosts> pages = secretPostsService.pageList(pageable);
@@ -42,15 +45,15 @@ public class SecretIndexController {
         return "/secrets/index";
     }
 
-    @GetMapping("/secrets/posts/write")
+    @GetMapping("/posts/write")
     public String write(@LoginUser UserDto.Response user, Model model){
         if(user != null){
             model.addAttribute("user", user);
         }
-        return "posts-write";
+        return "/secrets/posts-write";
     }
 
-    @GetMapping("/secrets/posts/read/{id}")
+    @GetMapping("/posts/read/{id}")
     public String read(@PathVariable long id, @LoginUser UserDto.Response dto, Model model) {
         SecretPostsDto.Response secretPosts = secretPostsService.findById(id);
         List<SecretCommentDto.Response> secretComment = secretPosts.getComments();
@@ -73,20 +76,20 @@ public class SecretIndexController {
             }
         }
         model.addAttribute("posts", secretPosts);
-        return "posts-read";
+        return "/secrets/posts-read";
     }
 
-    @GetMapping("/secrets/posts/update/{id}")
+    @GetMapping("/posts/update/{id}")
     public String update(@PathVariable long id, @LoginUser UserDto.Response user, Model model){
         SecretPostsDto.Response secretPosts = secretPostsService.findById(id);
         if(user != null){
             model.addAttribute("user", user);
         }
         model.addAttribute("posts", secretPosts);
-        return "posts-update";
+        return "/secrets/posts-update";
     }
 
-    @GetMapping("/secrets/posts/search")
+    @GetMapping("/posts/search")
     public String search(String keyword, Model model, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                          @LoginUser UserDto.Response user){
         Page<SecretPosts> pages = secretPostsService.search(keyword, pageable);
@@ -100,6 +103,6 @@ public class SecretIndexController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", pages.hasNext());
         model.addAttribute("hasPrev", pages.hasPrevious());
-        return "posts-search";
+        return "/secrets/posts-search";
     }
 }

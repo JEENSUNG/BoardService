@@ -2,29 +2,32 @@ package boardService.board.controller.secret;
 
 import boardService.board.dto.Result;
 import boardService.board.dto.UserDto;
-import boardService.board.dto.post.CommentDto;
 import boardService.board.dto.secret.SecretCommentDto;
 import boardService.board.security.auth.LoginUser;
-import boardService.board.service.post.CommentService;
 import boardService.board.service.secret.SecretCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/secrets")
 @RestController
+//@PreAuthorize("hasAnyRole({'ROLE_VIP', 'ROLE_SOCIAL_VIP'})")
 public class SecretCommentApiController {
 
     private final SecretCommentService secretCommentService;
 
     @PostMapping("/posts/{id}/comments")
     public ResponseEntity<?> save(@PathVariable long id, @RequestBody SecretCommentDto.Request dto,
-                                  @LoginUser UserDto.Response userDto){
+                                  @LoginUser UserDto.Response userDto, HttpSession httpSession){
         long commentId = secretCommentService.save(id, userDto.getNickname(), dto);
         boolean isVip = secretCommentService.check(userDto.getId());
+        UserDto.Response entity = secretCommentService.session(userDto.getUsername());
+        httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(new Result<>(commentId, isVip));
     }
 
@@ -40,8 +43,10 @@ public class SecretCommentApiController {
     }
 
     @DeleteMapping("/posts/{id}/comments/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id){
+    public ResponseEntity<?> delete(@PathVariable long id, @LoginUser UserDto.Response userDto, HttpSession httpSession){
         secretCommentService.delete(id);
+        UserDto.Response entity = secretCommentService.session(userDto.getUsername());
+        httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(id);
     }
 }

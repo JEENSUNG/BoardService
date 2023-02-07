@@ -1,7 +1,6 @@
 const main = {
     init : function() {
         const _this = this;
-
         // 게시글 저장
         $('#btn-save').on('click', function () {
             _this.save();
@@ -36,19 +35,32 @@ const main = {
         $('#btn-comment-save').on('click', function () {
             _this.commentSave();
         });
-
+         $('#btn-secret-comment-save').on('click', function () {
+            _this.secretCommentSave();
+        });
         $('#btn-like').on('click', function () {
             _this.like();
         });
-
         $('#btn-disLike').on('click', function () {
             _this.disLike();
+        });
+        $('#btn-secret-like').on('click', function () {
+            _this.secretLike();
+        });
+        $('#btn-secret-disLike').on('click', function () {
+            _this.secretDisLike();
         });
         // 댓글 수정
         document.querySelectorAll('#btn-comment-update').forEach(function (item) {
             item.addEventListener('click', function () { // 버튼 클릭 이벤트 발생시
                 const form = this.closest('form'); // btn의 가장 가까운 조상의 Element(form)를 반환 (closest)
                 _this.commentUpdate(form); // 해당 폼으로 업데이트 수행
+            });
+        });
+        document.querySelectorAll('#btn-secret-comment-update').forEach(function (item) {
+            item.addEventListener('click', function () { // 버튼 클릭 이벤트 발생시
+                const form = this.closest('form'); // btn의 가장 가까운 조상의 Element(form)를 반환 (closest)
+                _this.secretCommentUpdate(form); // 해당 폼으로 업데이트 수행
             });
         });
     },
@@ -74,6 +86,36 @@ const main = {
             }).done(function (dat, status, xhr) {
                 alert('등록되었습니다.');
                 window.location.href = '/posts/read/' + JSON.parse(dat.data);
+                if(JSON.parse(dat.vip)){
+                    alert("축하합니다! VIP 등급으로 승급하셨니다.");
+                }
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+    },
+
+    /** 비밀글 작성 */
+    secretSave : function () {
+        const data = {
+            title: $('#title').val(),
+            writer: $('#writer').val(),
+            content: $('#content').val()
+        };
+        // 공백 및 빈 문자열 체크
+        if (!data.title || data.title.trim() === "" || !data.content || data.content.trim() === "") {
+            alert("공백 또는 입력하지 않은 부분이 있습니다.");
+            return false;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/api/secrets/posts',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function (dat, status, xhr) {
+                alert('등록되었습니다.');
+                window.location.href = '/secrets/posts/read/' + JSON.parse(dat.data);
                 if(JSON.parse(dat.vip)){
                     alert("축하합니다! VIP 등급으로 승급하셨니다.");
                 }
@@ -113,6 +155,35 @@ const main = {
         }
     },
 
+    secretUpdate : function () {
+        const data = {
+            id: $('#id').val(),
+            title: $('#title').val(),
+            content: $('#content').val()
+        };
+
+        const con_check = confirm("수정하시겠습니까?");
+        if (con_check === true) {
+            if (!data.title || data.title.trim() === "" || !data.content || data.content.trim() === "") {
+                alert("공백 또는 입력하지 않은 부분이 있습니다.");
+                return false;
+            } else {
+                $.ajax({
+                    type: 'PUT',
+                    url: '/api/secrets/posts/' + data.id,
+                    dataType: 'JSON',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+                }).done(function () {
+                    alert("수정되었습니다.");
+                    window.location.href = '/secrets/posts/read/' + data.id;
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            }
+        }
+    },
+
     /** 글 삭제 */
     delete : function () {
         const id = $('#id').val();
@@ -128,6 +199,28 @@ const main = {
             }).done(function () {
                 alert("삭제되었습니다.");
                 window.location.href = '/';
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        } else {
+            return false;
+        }
+    },
+
+    secretDelete : function () {
+        const id = $('#id').val();
+        const con_check = confirm("정말 삭제하시겠습니까?");
+
+        if(con_check == true) {
+            $.ajax({
+                type: 'DELETE',
+                url: '/api/secrets/posts/'+id,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8'
+
+            }).done(function () {
+                alert("삭제되었습니다.");
+                window.location.href = '/secrets/';
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
@@ -211,6 +304,35 @@ const main = {
             });
         }
     },
+
+    secretCommentSave : function () {
+        const data = {
+            postsId: $('#postsId').val(),
+            comment: $('#comment').val()
+        }
+
+        // 공백 및 빈 문자열 체크
+        if (!data.comment || data.comment.trim() === "") {
+            alert("공백 또는 입력하지 않은 부분이 있습니다.");
+            return false;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '/api/secrets/posts/' + data.postsId + '/comments',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function (dat, status, xhr) {
+                alert('댓글이 등록되었습니다.');
+                window.location.reload();
+                if(JSON.parse(dat.vip)){
+                    alert("축하합니다! VIP 등급으로 승급하셨니다.");
+                }
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+    },
     /** 댓글 수정 */
     commentUpdate : function (form) {
         const data = {
@@ -248,6 +370,42 @@ const main = {
         }
     },
 
+    secretCommentUpdate : function (form) {
+        const data = {
+            id: form.querySelector('#id').value,
+            postsId: form.querySelector('#postsId').value,
+            comment: form.querySelector('#comment-content').value,
+            writerUserId: form.querySelector('#writerUserId').value,
+            sessionUserId: form.querySelector('#sessionUserId').value
+        }
+        console.log("commentWriterID : " + data.writerUserId);
+        console.log("sessionUserID : " + data.sessionUserId);
+
+        if (data.writerUserId !== data.sessionUserId) {
+            alert("본인이 작성한 댓글만 수정 가능합니다.");
+            return false;
+        }
+
+        if (!data.comment || data.comment.trim() === "") {
+            alert("공백 또는 입력하지 않은 부분이 있습니다.");
+            return false;
+        }
+        const con_check = confirm("수정하시겠습니까?");
+        if (con_check === true) {
+            $.ajax({
+                type: 'PUT',
+                url: '/api/secrets/posts/' + data.postsId + '/comments/' + data.id,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function () {
+                window.location.reload();
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+    },
+
     /** 댓글 삭제 */
     commentDelete : function (postsId, commentId, commentWriterId, sessionUserId) {
 
@@ -261,6 +419,29 @@ const main = {
                 $.ajax({
                     type: 'DELETE',
                     url: '/api/posts/' + postsId + '/comments/' + commentId,
+                    dataType: 'JSON',
+                }).done(function () {
+                    alert('댓글이 삭제되었습니다.');
+                    window.location.reload();
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            }
+        }
+    },
+
+    secretCommentDelete : function (postsId, commentId, commentWriterId, sessionUserId) {
+
+        // 본인이 작성한 글인지 확인
+        if (commentWriterId !== sessionUserId) {
+            alert("본인이 작성한 댓글만 삭제 가능합니다.");
+        } else {
+            const con_check = confirm("삭제하시겠습니까?");
+
+            if (con_check === true) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/api/secrets/posts/' + postsId + '/comments/' + commentId,
                     dataType: 'JSON',
                 }).done(function () {
                     alert('댓글이 삭제되었습니다.');
@@ -293,6 +474,26 @@ const main = {
         }
     },
 
+    secretLike : function (form) {
+        const id = $('#id').val();
+        const con_check = confirm("추천하시겠습니까?");
+
+        if(con_check == true) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/secrets/posts/'+ id + '/like',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8'
+            }).done(function () {
+                alert("추천하였습니다.");
+                window.location.href = '/secrets/posts/read/' + id;
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        } else {
+            return false;
+        }
+    },
 
     disLike : function (form) {
         const id = $('#id').val();
@@ -307,6 +508,27 @@ const main = {
             }).done(function () {
                 alert("비추천하였습니다.");
                 window.location.href = '/posts/read/' + id;
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        } else {
+            return false;
+        }
+    },
+
+    secretDisLike : function (form) {
+        const id = $('#id').val();
+        const con_check = confirm("비추천하시겠습니까?");
+
+        if(con_check == true) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/secrets/posts/'+ id + '/disLike',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8'
+            }).done(function () {
+                alert("비추천하였습니다.");
+                window.location.href = '/secrets/posts/read/' + id;
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -20,9 +21,11 @@ public class CommentApiController {
 
     @PostMapping("/posts/{id}/comments")
     public ResponseEntity<?> save(@PathVariable long id, @RequestBody CommentDto.Request dto,
-                                  @LoginUser UserDto.Response userDto){
+                                  @LoginUser UserDto.Response userDto, HttpSession httpSession){
         long commentId = commentService.save(id, userDto.getNickname(), dto);
         boolean isVip = commentService.check(userDto.getId());
+        UserDto.Response entity = commentService.session(userDto.getUsername());
+        httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(new Result<>(commentId, isVip));
     }
 
@@ -38,8 +41,10 @@ public class CommentApiController {
     }
 
     @DeleteMapping("/posts/{id}/comments/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id){
+    public ResponseEntity<?> delete(@PathVariable long id, @LoginUser UserDto.Response userDto, HttpSession httpSession){
         commentService.delete(id);
+        UserDto.Response entity = commentService.session(userDto.getUsername());
+        httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(id);
     }
 }

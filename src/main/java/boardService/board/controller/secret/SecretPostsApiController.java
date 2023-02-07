@@ -7,18 +7,24 @@ import boardService.board.security.auth.LoginUser;
 import boardService.board.service.secret.SecretPostsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/secrets")
+@RequestMapping("/api/secrets")
+//@PreAuthorize("hasAnyRole({'ROLE_VIP', 'ROLE_SOCIAL_VIP'})")
 public class SecretPostsApiController {
     private final SecretPostsService secretPostsService;
 
     @PostMapping("/posts")
-    public ResponseEntity<?> save(@RequestBody SecretPostsDto.Request dto, @LoginUser UserDto.Response user) {
+    public ResponseEntity<?> save(@RequestBody SecretPostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
         long id = secretPostsService.save(dto, user.getNickname());
         boolean isVip = secretPostsService.check(user.getId());
+        UserDto.Response entity = secretPostsService.session(user.getUsername());
+        httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(new Result<>(id, isVip));
     }
 
@@ -34,8 +40,10 @@ public class SecretPostsApiController {
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id){
+    public ResponseEntity<?> delete(@PathVariable long id, @LoginUser UserDto.Response user, HttpSession httpSession){
         secretPostsService.delete(id);
+        UserDto.Response entity = secretPostsService.session(user.getUsername());
+        httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(id);
     }
 

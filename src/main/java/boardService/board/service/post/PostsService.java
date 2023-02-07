@@ -9,13 +9,25 @@ import boardService.board.dto.UserDto;
 import boardService.board.repository.post.LikesRepository;
 import boardService.board.repository.post.PostsRepository;
 import boardService.board.repository.UserRepository;
+import boardService.board.security.auth.LoginUser;
+import boardService.board.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -25,6 +37,7 @@ public class PostsService {
     private final PostsRepository postsRepository;
     private final UserRepository userRepository;
     private final LikesRepository likeRepository;
+    private final AuthenticationManager authenticationManager;
 
     @Transactional
     public long save(PostsDto.Request dto, String nickname){
@@ -36,6 +49,11 @@ public class PostsService {
             }else if(user.getRole().equals(Role.SOCIAL)){
                 user.setRole(Role.SOCIAL_VIP);
             }
+            //승급하고 바로 비밀게시판 접근 가능
+            Collection<GrantedAuthority> collection = new ArrayList<>();
+            collection.add(() -> "ROLE_" + user.getRole());
+            Authentication auth = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), collection);
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
         dto.setUser(user);
         Posts posts = dto.toEntity();
@@ -69,6 +87,10 @@ public class PostsService {
             }else if(user.getRole().equals(Role.SOCIAL_VIP)){
                 user.setRole(Role.SOCIAL);
             }
+            Collection<GrantedAuthority> collection = new ArrayList<>();
+            collection.add(() -> "ROLE_" + user.getRole());
+            Authentication auth = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), collection);
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
         postsRepository.delete(posts);
     }
@@ -139,5 +161,10 @@ public class PostsService {
         User user = userRepository.findById(id).orElseThrow(() ->
                 new UsernameNotFoundException("찾을 수 없는 사용자입니다."));
         return user.getPoint() >= 200 && (user.getRole().equals(Role.USER_VIP)) || (user.getRole().equals(Role.SOCIAL_VIP));
+    }
+
+    public UserDto.Response session(String username) {
+        return new UserDto.Response(userRepository.findByUsername(username).orElseThrow(()
+            -> new UsernameNotFoundException("찾을 수 없는 사용자입니다.")));
     }
 }

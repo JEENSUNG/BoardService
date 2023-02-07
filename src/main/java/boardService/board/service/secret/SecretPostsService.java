@@ -12,10 +12,16 @@ import boardService.board.repository.secret.SecretPostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -36,6 +42,10 @@ public class SecretPostsService {
             }else if(user.getRole().equals(Role.SOCIAL)){
                 user.setRole(Role.SOCIAL_VIP);
             }
+            Collection<GrantedAuthority> collection = new ArrayList<>();
+            collection.add(() -> "ROLE_" + user.getRole());
+            Authentication auth = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), collection);
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
         dto.setUser(user);
         SecretPosts secretPosts = dto.toEntity();
@@ -69,6 +79,10 @@ public class SecretPostsService {
             }else if(user.getRole().equals(Role.SOCIAL_VIP)){
                 user.setRole(Role.SOCIAL);
             }
+            Collection<GrantedAuthority> collection = new ArrayList<>();
+            collection.add(() -> "ROLE_" + user.getRole());
+            Authentication auth = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), collection);
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
         secretPostsRepository.delete(secretPosts);
     }
@@ -139,5 +153,10 @@ public class SecretPostsService {
         User user = userRepository.findById(id).orElseThrow(() ->
                 new UsernameNotFoundException("찾을 수 없는 사용자입니다."));
         return user.getPoint() >= 200 && (user.getRole().equals(Role.USER_VIP)) || (user.getRole().equals(Role.SOCIAL_VIP));
+    }
+
+    public UserDto.Response session(String username) {
+        return new UserDto.Response(userRepository.findByUsername(username).orElseThrow(()
+                -> new UsernameNotFoundException("찾을 수 없는 사용자입니다.")));
     }
 }
