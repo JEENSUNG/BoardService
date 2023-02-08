@@ -1,12 +1,12 @@
 package boardService.board.service.secret;
 
-import boardService.board.domain.Role;
-import boardService.board.domain.User;
+import boardService.board.domain.user.Role;
+import boardService.board.domain.user.User;
 import boardService.board.domain.secret.SecretLikes;
 import boardService.board.domain.secret.SecretPosts;
 import boardService.board.dto.UserDto;
 import boardService.board.dto.secret.SecretPostsDto;
-import boardService.board.repository.UserRepository;
+import boardService.board.repository.user.UserRepository;
 import boardService.board.repository.secret.SecretLikesRepository;
 import boardService.board.repository.secret.SecretPostsRepository;
 import lombok.RequiredArgsConstructor;

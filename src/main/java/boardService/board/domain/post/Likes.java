@@ -1,6 +1,6 @@
 package boardService.board.domain.post;
 
-import boardService.board.domain.User;
+import boardService.board.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

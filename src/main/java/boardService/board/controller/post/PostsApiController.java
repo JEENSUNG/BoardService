@@ -1,6 +1,5 @@
 package boardService.board.controller.post;
 
-import boardService.board.domain.User;
 import boardService.board.dto.post.PostsDto;
 import boardService.board.dto.Result;
 import boardService.board.dto.UserDto;

@@ -1,9 +1,5 @@
 package boardService.board.repository.secret;
 
-import boardService.board.domain.User;
-import boardService.board.domain.post.Likes;
-import boardService.board.domain.post.Posts;
-import boardService.board.domain.secret.SecretLikes;
 import boardService.board.domain.secret.SecretPosts;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.util.Optional;
 
 public interface SecretPostsRepository extends JpaRepository<SecretPosts, Long> {
     @Modifying

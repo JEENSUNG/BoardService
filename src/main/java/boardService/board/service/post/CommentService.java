@@ -2,13 +2,13 @@ package boardService.board.service.post;
 
 import boardService.board.domain.post.Comment;
 import boardService.board.domain.post.Posts;
-import boardService.board.domain.Role;
-import boardService.board.domain.User;
+import boardService.board.domain.user.Role;
+import boardService.board.domain.user.User;
 import boardService.board.dto.UserDto;
 import boardService.board.dto.post.CommentDto;
 import boardService.board.repository.post.CommentRepository;
 import boardService.board.repository.post.PostsRepository;
-import boardService.board.repository.UserRepository;
+import boardService.board.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

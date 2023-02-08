@@ -1,6 +1,6 @@
 package boardService.board.repository.secret;
 
-import boardService.board.domain.User;
+import boardService.board.domain.user.User;
 import boardService.board.domain.secret.SecretLikes;
 import boardService.board.domain.secret.SecretPosts;
 import org.springframework.data.jpa.repository.JpaRepository;

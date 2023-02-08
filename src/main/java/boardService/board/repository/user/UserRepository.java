@@ -1,6 +1,6 @@
-package boardService.board.repository;
+package boardService.board.repository.user;
 
-import boardService.board.domain.User;
+import boardService.board.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package boardService.board.dto.secret;
 
-import boardService.board.domain.User;
+import boardService.board.domain.user.User;
 import boardService.board.domain.secret.SecretComment;
 import boardService.board.domain.secret.SecretPosts;
 import lombok.*;

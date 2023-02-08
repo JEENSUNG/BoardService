@@ -1,9 +1,7 @@
 package boardService.board.domain.secret;
 
-import boardService.board.domain.TimeEntity;
-import boardService.board.domain.User;
-import boardService.board.domain.post.Comment;
-import boardService.board.domain.secret.SecretLikes;
+import boardService.board.domain.user.TimeEntity;
+import boardService.board.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

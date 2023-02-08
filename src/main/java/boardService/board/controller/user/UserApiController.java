@@ -1,9 +1,8 @@
 package boardService.board.controller.user;
 
 import boardService.board.dto.UserDto;
-import boardService.board.service.UserService;
+import boardService.board.service.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,4 +1,4 @@
-package boardService.board.domain;
+package boardService.board.domain.user;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

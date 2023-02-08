@@ -2,19 +2,19 @@ package boardService.board.service.post;
 
 import boardService.board.domain.post.Likes;
 import boardService.board.domain.post.Posts;
-import boardService.board.domain.Role;
-import boardService.board.domain.User;
-import boardService.board.dto.post.PostsDto;
+import boardService.board.domain.post.PostsSearch;
+import boardService.board.domain.user.Role;
+import boardService.board.domain.user.User;
 import boardService.board.dto.UserDto;
+import boardService.board.dto.post.PostsDto;
 import boardService.board.repository.post.LikesRepository;
 import boardService.board.repository.post.PostsRepository;
-import boardService.board.repository.UserRepository;
-import boardService.board.security.auth.LoginUser;
-import boardService.board.service.UserService;
+import boardService.board.repository.post.SearchRepository;
+import boardService.board.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,11 +23,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -35,9 +34,9 @@ import java.util.Optional;
 public class PostsService {
 
     private final PostsRepository postsRepository;
+    private final SearchRepository searchRepository;
     private final UserRepository userRepository;
     private final LikesRepository likeRepository;
-    private final AuthenticationManager authenticationManager;
 
     @Transactional
     public long save(PostsDto.Request dto, String nickname){
@@ -106,7 +105,22 @@ public class PostsService {
     }
 
     @Transactional(readOnly = true)
+    public Page<Posts> listUp(Pageable pageable){
+        return postsRepository.findAll(pageable);
+    }
+
+    @Transactional
     public Page<Posts> search(String keyword, Pageable pageable){
+        Optional<PostsSearch> postsSearch =  searchRepository.findByWords(keyword);
+        if(postsSearch.isEmpty()){
+            searchRepository.save(PostsSearch.builder()
+                    .words(keyword)
+                    .searchCount(1)
+                    .build());
+        }else{
+            PostsSearch search = postsSearch.get();
+            search.setSearchCount(search.getSearchCount() + 1);
+        }
         return postsRepository.findByTitleContaining(keyword, pageable);
     }
 
@@ -157,14 +171,27 @@ public class PostsService {
         }
     }
 
+    @Transactional(readOnly = true)
     public boolean check(long id) {
         User user = userRepository.findById(id).orElseThrow(() ->
                 new UsernameNotFoundException("찾을 수 없는 사용자입니다."));
         return user.getPoint() >= 200 && (user.getRole().equals(Role.USER_VIP)) || (user.getRole().equals(Role.SOCIAL_VIP));
     }
 
+    @Transactional(readOnly = true)
     public UserDto.Response session(String username) {
         return new UserDto.Response(userRepository.findByUsername(username).orElseThrow(()
             -> new UsernameNotFoundException("찾을 수 없는 사용자입니다.")));
+    }
+
+    @Transactional
+    public List<PostsSearch> popular() {
+        Sort sort = Sort.by(
+            Sort.Order.desc("searchCount")
+        );
+        List<PostsSearch> searches = searchRepository.findTop10By(sort);
+        for(int i = 1; i <= Math.min(searches.size(), 10); i++)
+            searches.get(i - 1).setRanking(i);
+        return searches;
     }
 }

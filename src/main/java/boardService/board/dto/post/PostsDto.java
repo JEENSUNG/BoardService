@@ -1,8 +1,7 @@
 package boardService.board.dto.post;
 
 import boardService.board.domain.post.Posts;
-import boardService.board.domain.User;
-import boardService.board.dto.post.CommentDto;
+import boardService.board.domain.user.User;
 import lombok.*;
 
 import java.util.List;

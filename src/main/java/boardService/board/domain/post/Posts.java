@@ -1,9 +1,7 @@
 package boardService.board.domain.post;
 
-import boardService.board.domain.TimeEntity;
-import boardService.board.domain.User;
-import boardService.board.domain.post.Comment;
-import boardService.board.domain.post.Likes;
+import boardService.board.domain.user.TimeEntity;
+import boardService.board.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

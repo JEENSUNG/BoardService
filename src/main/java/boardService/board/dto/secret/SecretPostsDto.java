@@ -1,8 +1,7 @@
 package boardService.board.dto.secret;
 
-import boardService.board.domain.User;
+import boardService.board.domain.user.User;
 import boardService.board.domain.secret.SecretPosts;
-import boardService.board.dto.post.CommentDto;
 import lombok.*;
 
 import java.util.List;

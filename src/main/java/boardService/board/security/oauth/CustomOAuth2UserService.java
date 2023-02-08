@@ -1,8 +1,8 @@
 package boardService.board.security.oauth;
 
-import boardService.board.domain.User;
+import boardService.board.domain.user.User;
 import boardService.board.dto.UserDto;
-import boardService.board.repository.UserRepository;
+import boardService.board.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

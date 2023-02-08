@@ -2,7 +2,7 @@ package boardService.board.controller.user;
 
 import boardService.board.dto.UserDto;
 import boardService.board.security.auth.LoginUser;
-import boardService.board.service.UserService;
+import boardService.board.service.user.UserService;
 import boardService.board.validator.CustomValidators;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

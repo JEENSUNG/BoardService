@@ -1,4 +1,4 @@
-package boardService.board.domain;
+package boardService.board.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
-public class User extends TimeEntity{
+public class User extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

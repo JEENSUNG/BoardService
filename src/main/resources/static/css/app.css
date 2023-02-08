@@ -10,7 +10,7 @@ input:invalid {
 #header {
     background: #69cdaa;
     color: #ffffff;
-    padding: 15px;
+    padding: 10px;
     font-size: 3em;
 }
 #header a:link { color:#ffffff; text-decoration: none;}

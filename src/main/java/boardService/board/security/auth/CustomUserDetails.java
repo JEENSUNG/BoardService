@@ -1,6 +1,6 @@
 package boardService.board.security.auth;
 
-import boardService.board.domain.User;
+import boardService.board.domain.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

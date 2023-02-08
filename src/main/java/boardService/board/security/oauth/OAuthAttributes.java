@@ -1,7 +1,7 @@
 package boardService.board.security.oauth;
 
-import boardService.board.domain.Role;
-import boardService.board.domain.User;
+import boardService.board.domain.user.Role;
+import boardService.board.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

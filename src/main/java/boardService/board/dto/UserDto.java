@@ -1,7 +1,7 @@
 package boardService.board.dto;
 
-import boardService.board.domain.Role;
-import boardService.board.domain.User;
+import boardService.board.domain.user.Role;
+import boardService.board.domain.user.User;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
