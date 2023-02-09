@@ -99,4 +99,14 @@ CRUD 게시판을 만들고 포인트를 이용하여 사용자 권한에 따라
 - (현재는 MySql로 구현했으나 Redis를 조금 더 공부해서 구현하고 싶은 기능)
 
 4. DB 설계
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/623a1a99-77f5-40e6-be73-156a81693f3f/Untitled.png)
+
+![Untitled](https://user-images.githubusercontent.com/61839458/217808842-ecdccaba-2bcc-4867-90e2-44310cfb1741.png)
+
+5. API 설계
+https://www.notion.so/5-API-85fc5b625484446bbc3bea6631401058
+
+6. 화면설계서
+https://www.notion.so/6-e8de440614224155b6e79c13f79f79e6
+
+7. 에러 사항 및 해결법과 고민들
+https://www.notion.so/43dd746d01cd45d2824339b361442c34?v=c58ec3dec8aa4497ad00a08cb41a67c1
