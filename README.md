@@ -103,9 +103,34 @@ CRUD 게시판을 만들고 포인트를 이용하여 사용자 권한에 따라
 
 # 5. API 설계
 https://www.notion.so/5-API-85fc5b625484446bbc3bea6631401058
+![image](https://user-images.githubusercontent.com/61839458/218073483-33e1517e-96e2-4933-af0f-f4ca8fb696db.png)
+
+![image](https://user-images.githubusercontent.com/61839458/218073552-91a5986b-4091-473b-9422-fd5503f3db86.png)
+
+![image](https://user-images.githubusercontent.com/61839458/218073606-300ae731-d184-4ed3-9e26-9ae189629ec7.png)
+
+![image](https://user-images.githubusercontent.com/61839458/218073658-aee28141-2f99-4aa1-84a9-80a198d99e53.png)
+
 
 # 6. 화면설계서
 https://www.notion.so/6-e8de440614224155b6e79c13f79f79e6
 
+![image](https://user-images.githubusercontent.com/61839458/218073836-e765ad5d-4160-41da-a573-927fc85bddaf.png)
+![image](https://user-images.githubusercontent.com/61839458/218073877-33dfdf5f-a8f3-416a-920b-24afdfe1efeb.png)
+![image](https://user-images.githubusercontent.com/61839458/218073927-4aaf5543-25dd-4992-9ce5-33a114d8e9b0.png)
+![image](https://user-images.githubusercontent.com/61839458/218073998-e8335a0b-ca79-4278-8c5e-9face658d86c.png)
+![image](https://user-images.githubusercontent.com/61839458/218074046-dc8aaa2b-f88f-485b-8b3e-71f18356c8a6.png)
+![image](https://user-images.githubusercontent.com/61839458/218074084-4afc326b-5291-4334-b81b-8293a21ccc16.png)
+![image](https://user-images.githubusercontent.com/61839458/218074108-edf6d537-f920-4fdd-85f2-fc83429bed18.png)
+![image](https://user-images.githubusercontent.com/61839458/218074145-d2d67547-2350-43ea-8927-37cc30eed4e9.png)
+![image](https://user-images.githubusercontent.com/61839458/218074189-a6c7b64d-7af5-49b2-a0da-529a965d2f4d.png)
+![image](https://user-images.githubusercontent.com/61839458/218074230-9a6ec9b6-63ec-4eaf-9b9a-42dc4d721d26.png)
+![image](https://user-images.githubusercontent.com/61839458/218074265-88aa69b9-f29a-48bf-b215-9f24eff9eeb4.png)
+![image](https://user-images.githubusercontent.com/61839458/218074297-03801897-316e-407c-85b8-4c1ace06f186.png)
+![image](https://user-images.githubusercontent.com/61839458/218074332-8286f85d-2df3-40be-a8b9-a7882446505d.png)
+![image](https://user-images.githubusercontent.com/61839458/218074369-41da7397-f4a7-4770-8e49-2c39483cdda3.png)
+
 # 7. 에러 사항 및 해결법과 고민들
 https://www.notion.so/43dd746d01cd45d2824339b361442c34?v=c58ec3dec8aa4497ad00a08cb41a67c1
+![image](https://user-images.githubusercontent.com/61839458/218074736-530576f8-3f86-4b5f-a7ca-37028fe637ae.png)
+
