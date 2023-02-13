@@ -21,6 +21,7 @@
                 {{#user}}
                     <button type="button" id="btn-like" class="btn btn-primary">{{posts.likeCount}} 추천</button>
                     <button type="button" id="btn-disLike" class="btn btn-primary"> {{posts.disLikeCount}} 비추천</button>
+                    <span><a href="/posts/letters/{{to}}">쪽지보내기</a></span>
                 {{/user}}
                 {{^user}}
                     <button type="button" class="btn btn-primary">{{posts.likeCount}} 추천</button>

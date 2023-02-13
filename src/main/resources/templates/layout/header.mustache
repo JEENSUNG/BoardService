@@ -18,18 +18,18 @@
 </div>
 
 <nav id ="nav">
-    <div class="text-left">
+    <a class="text-left">
         <a href="/" class="btn btn-outline-dark">자유게시판</a>&nbsp
         <a href="/posts/popular" class="btn btn-outline-primary">인기게시판</a>&nbsp
         <a href="/posts/popular/search" class="btn btn-outline-success">검색어 순위</a>&nbsp
-        <a href="/secrets" class="btn btn-outline-danger">비밀게시판</a>
-         &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+        <a href="/secrets" class="btn btn-outline-danger">비밀게시판</a>&nbsp
+        <a href="/userList" class="btn btn-outline-warning">유저목록</a>
         <span class="text-right">
             {{#user}}
                 <span class="mx-2">포인트 : {{user.point}}</span>
                 <span class="mx-2">{{user.nickname}}님 안녕하세요!</span>
                 <a href="/logout" class="btn btn-outline-warning"> 로그아웃</a>
-                <a href="/modify" class="btn btn-outline-dark bi bi-gear"></a>
+                <a href="/myPage" class="btn btn-outline-dark bi bi-gear"></a>
             {{/user}}
             {{^user}}
                 <a href="/oauth2/authorization/naver" role="button" class="btn btn-outline-success"><img id="img" src="/img/naver.ico"/> 로그인</a>
@@ -38,5 +38,5 @@
                 <a href="/auth/join" role="button" class="btn btn-outline-dark bi bi-person-circle"> 회원가입</a>
             {{/user}}
         </span>
-    </div>
+    </a>
 </nav>

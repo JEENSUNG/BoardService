@@ -1,6 +1,6 @@
 package boardService.board.security.auth;
 
-import boardService.board.dto.UserDto;
+import boardService.board.dto.user.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

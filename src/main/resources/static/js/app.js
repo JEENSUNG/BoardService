@@ -35,9 +35,20 @@ const main = {
         $('#btn-comment-save').on('click', function () {
             _this.commentSave();
         });
+
          $('#btn-secret-comment-save').on('click', function () {
             _this.secretCommentSave();
         });
+
+        //쪽지 보내기
+        $('#btn-letter-save').on('click', function () {
+            _this.letterSave();
+        });
+
+        $('#btn-post-letter-save').on('click', function () {
+            _this.postLetterSave();
+        });
+
         $('#btn-like').on('click', function () {
             _this.like();
         });
@@ -534,6 +545,73 @@ const main = {
             });
         } else {
             return false;
+        }
+    },
+
+    letterSave : function () {
+        const data = {
+            id: $('#id').val(),
+            userId: $('#userId').val(),
+            title: $('#title').val(),
+            content: $('#content').val()
+        };
+        const con_check = confirm("쪽지를 보내시겠습니까?");
+        if(data.userId == data.id){
+            alert("자기 자신에게는 쪽지를 보낼 수 없습니다.");
+            return false;
+        }// 공백 및 빈 문자열 체크
+        if (!data.title || data.title.trim() === "" || !data.content || data.content.trim() === "") {
+            alert("공백 또는 입력하지 않은 부분이 있습니다.");
+            return false;
+        } else {
+            if(con_check == true){
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/user/letters/' + data.id,
+                    dataType: 'JSON',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+                }).done(function () {
+                    alert('성공적으로 보냈습니다.');
+                    window.location.href = '/userList';
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            }
+        }
+    },
+
+    postLetterSave : function () {
+        const data = {
+            id: $('#id').val(),
+            userId: $('#userId').val(),
+            title: $('#title').val(),
+            content: $('#content').val()
+        };
+        const con_check = confirm("쪽지를 보내시겠습니까?");
+        if(data.userId == data.id){
+            alert("자기 자신에게는 쪽지를 보낼 수 없습니다.");
+            return false;
+        }
+        // 공백 및 빈 문자열 체크
+        if (!data.title || data.title.trim() === "" || !data.content || data.content.trim() === "") {
+            alert("공백 또는 입력하지 않은 부분이 있습니다.");
+            return false;
+        } else {
+            if(con_check == true){
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/posts/letters/' + data.id,
+                    dataType: 'JSON',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+                }).done(function () {
+                    alert('성공적으로 보냈습니다.');
+                    window.location.href = '/posts/read/' + data.id;
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            }
         }
     }
 };

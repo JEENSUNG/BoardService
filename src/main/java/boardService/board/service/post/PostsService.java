@@ -5,7 +5,7 @@ import boardService.board.domain.post.Posts;
 import boardService.board.domain.post.PostsSearch;
 import boardService.board.domain.user.Role;
 import boardService.board.domain.user.User;
-import boardService.board.dto.UserDto;
+import boardService.board.dto.user.UserDto;
 import boardService.board.dto.post.PostsDto;
 import boardService.board.repository.post.LikesRepository;
 import boardService.board.repository.post.PostsRepository;
@@ -23,7 +23,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

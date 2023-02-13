@@ -1,10 +1,12 @@
 package boardService.board.controller.post;
 
+import boardService.board.dto.letter.LetterDto;
 import boardService.board.dto.post.PostsDto;
 import boardService.board.dto.Result;
-import boardService.board.dto.UserDto;
+import boardService.board.dto.user.UserDto;
 import boardService.board.security.auth.LoginUser;
 import boardService.board.service.post.PostsService;
+import boardService.board.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 public class PostsApiController {
 
     private final PostsService postsService;
+    private final UserService userService;
 
     @PostMapping("/posts")
     public ResponseEntity<?> save(@RequestBody PostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
@@ -57,4 +60,5 @@ public class PostsApiController {
         postsService.disLike(id, dto);
         return ResponseEntity.ok(id);
     }
+
 }

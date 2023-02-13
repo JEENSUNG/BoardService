@@ -1,10 +1,9 @@
 package boardService.board.controller.secret;
 
 import boardService.board.domain.secret.SecretPosts;
-import boardService.board.dto.post.CommentDto;
 import boardService.board.dto.secret.SecretCommentDto;
 import boardService.board.dto.secret.SecretPostsDto;
-import boardService.board.dto.UserDto;
+import boardService.board.dto.user.UserDto;
 import boardService.board.security.auth.LoginUser;
 import boardService.board.service.secret.SecretPostsService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

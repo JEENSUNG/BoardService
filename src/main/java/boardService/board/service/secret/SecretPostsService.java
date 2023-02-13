@@ -4,7 +4,7 @@ import boardService.board.domain.user.Role;
 import boardService.board.domain.user.User;
 import boardService.board.domain.secret.SecretLikes;
 import boardService.board.domain.secret.SecretPosts;
-import boardService.board.dto.UserDto;
+import boardService.board.dto.user.UserDto;
 import boardService.board.dto.secret.SecretPostsDto;
 import boardService.board.repository.user.UserRepository;
 import boardService.board.repository.secret.SecretLikesRepository;
@@ -149,12 +149,14 @@ public class SecretPostsService {
         }
     }
 
+    @Transactional(readOnly = true)
     public boolean check(long id) {
         User user = userRepository.findById(id).orElseThrow(() ->
                 new UsernameNotFoundException("찾을 수 없는 사용자입니다."));
         return user.getPoint() >= 200 && (user.getRole().equals(Role.USER_VIP)) || (user.getRole().equals(Role.SOCIAL_VIP));
     }
 
+    @Transactional(readOnly = true)
     public UserDto.Response session(String username) {
         return new UserDto.Response(userRepository.findByUsername(username).orElseThrow(()
                 -> new UsernameNotFoundException("찾을 수 없는 사용자입니다.")));

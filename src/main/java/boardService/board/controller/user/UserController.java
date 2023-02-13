@@ -1,10 +1,17 @@
 package boardService.board.controller.user;
 
-import boardService.board.dto.UserDto;
+import boardService.board.domain.letter.Letter;
+import boardService.board.domain.user.User;
+import boardService.board.dto.user.UserDto;
 import boardService.board.security.auth.LoginUser;
+import boardService.board.service.letter.LetterService;
 import boardService.board.service.user.UserService;
 import boardService.board.validator.CustomValidators;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -12,10 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,12 +32,12 @@ public class UserController {
     //나중에 errors 대신 bindingresult로 바꿔서 써보자
 
     private final UserService userService;
-
     private final CustomValidators.EmailValidator EmailValidator;
     private final CustomValidators.NicknameValidator NicknameValidator;
     private final CustomValidators.UsernameValidator UsernameValidator;
+    private final LetterService letterService;
 
-    //@valid어노테이션으로 검증이 필요한 객체를 가져오기저넹 수행할 메소드 지정
+    //@valid어노테이션으로 검증이 필요한 객체를 가져오기 전에 수행할 메소드 지정
     @InitBinder
     public void validatorBinder(WebDataBinder binder) {
         //webdatabinder : HTTP 요청 정보를 컨트롤러 메소드의 파라미터나 모델에 바인딩할 때 사용되는 바인딩 객체
@@ -87,11 +91,32 @@ public class UserController {
     }
 
     /* 회원정보 수정 */
+    @GetMapping("/myPage")
+    public String myPage(@LoginUser UserDto.Response user, Model model) {
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
+        return "/user/myPage";
+    }
+
     @GetMapping("/modify")
-    public String modify(@LoginUser UserDto.Response user, Model model) {
+    public String modify(@LoginUser UserDto.Response user, Model model){
         if (user != null) {
             model.addAttribute("user", user);
         }
         return "/user/user-modify";
+    }
+
+    @GetMapping("/userList")
+    public String userList(Model model, @PageableDefault(sort = "createdDate", direction = Sort.Direction.ASC, size = 20)Pageable pageable
+                            ,@LoginUser UserDto.Response user){
+        Page<User> userList = userService.findUserList(pageable);
+        model.addAttribute("user", user);
+        model.addAttribute("userList", userList);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", userList.hasNext());
+        model.addAttribute("hasPrev", userList.hasPrevious());
+        return "/user/user-list";
     }
 }

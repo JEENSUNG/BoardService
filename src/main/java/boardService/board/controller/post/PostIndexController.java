@@ -2,11 +2,12 @@ package boardService.board.controller.post;
 
 import boardService.board.domain.post.Posts;
 import boardService.board.domain.post.PostsSearch;
-import boardService.board.dto.UserDto;
+import boardService.board.dto.user.UserDto;
 import boardService.board.dto.post.CommentDto;
 import boardService.board.dto.post.PostsDto;
 import boardService.board.security.auth.LoginUser;
 import boardService.board.service.post.PostsService;
+import boardService.board.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,7 @@ import java.util.Objects;
 public class PostIndexController {
 
     private final PostsService postsService;
+    private final UserService userService;
 
     @GetMapping("/")
     public String index(Model model, @PageableDefault(sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
@@ -90,6 +92,7 @@ public class PostIndexController {
                 postsService.updateView(id); //자신이 조회하는건 조회수 증가x
             }
         }
+        model.addAttribute("to", post.getUserId());
         model.addAttribute("posts", post);
         return "posts/posts-read";
     }
@@ -129,4 +132,5 @@ public class PostIndexController {
         model.addAttribute("searches", searches);
         return "posts/posts-popularSearch";
     }
+
 }

@@ -1,0 +1,25 @@
+{{>layout/header}}
+<br/>
+<div id="posts_list">
+    <div class="col-md-12">
+        <form class="card">
+            <div class="card-header d-flex justify-content-between">
+                <label for="createdDate">{{letter.createdDate}}</label>
+            </div>
+            <div class="card-header d-flex justify-content-between">
+                <label for="writer">닉네임 : {{letter.takenUsername}}</label>
+            </div>
+            <div class="card-body">
+                <label for="title">제목</label>
+                <input type="text" class="form-control" id="title" value="{{letter.title}}" readonly>
+                <br/>
+                <label for="content">내용</label>
+                <textarea rows="5" class="form-control" id="content" readonly>{{letter.content}}</textarea>
+            </div>
+        </form>
+        {{^user}}
+            <a href="/" role="button" class="btn btn-info bi bi-arrow-return-left"> 목록</a>
+        {{/user}}
+    </div>
+</div>
+{{>layout/footer}}

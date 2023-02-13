@@ -1,9 +1,15 @@
 package boardService.board.service.user;
 
+import boardService.board.domain.letter.Letter;
 import boardService.board.domain.user.User;
-import boardService.board.dto.UserDto;
+import boardService.board.dto.letter.LetterDto;
+import boardService.board.dto.user.UserDto;
+import boardService.board.repository.letter.LetterRepository;
 import boardService.board.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+    private final LetterRepository letterRepository;
 
     /* 회원가입 */
     @Transactional
@@ -50,5 +57,16 @@ public class UserService {
 
         String encPassword = encoder.encode(dto.getPassword());
         user.modify(dto.getNickname(), encPassword);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<User> findUserList(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public String findByNickname(long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
+        return user.getNickname();
     }
 }

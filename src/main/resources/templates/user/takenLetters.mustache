@@ -1,0 +1,23 @@
+{{>layout/header}}
+<div id="posts_list">
+    <table id="table" class="table table-horizontal">
+        <thead id="thead">
+        <tr>
+            <th>보낸사람</th>
+            <th>제목</th>
+            <th>날짜</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#letters}}
+            <tr>
+                <td>{{sendUsername}}</a></td>
+                <td><a href="/letters/{{id}}/send">{{title}}</a></td>
+                <td>{{createdDate}}</td>
+            </tr>
+        {{/letters}}
+        </tbody>
+    </table>
+    {{>posts/posts-page}}
+</div>
+{{>layout/footer}}

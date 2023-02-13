@@ -1,13 +1,12 @@
-package boardService.board.controller.secret;
+package boardService.board.controller.secretComment;
 
 import boardService.board.dto.Result;
-import boardService.board.dto.UserDto;
+import boardService.board.dto.user.UserDto;
 import boardService.board.dto.secret.SecretCommentDto;
 import boardService.board.security.auth.LoginUser;
-import boardService.board.service.secret.SecretCommentService;
+import boardService.board.service.secretComment.SecretCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
