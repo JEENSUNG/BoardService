@@ -22,24 +22,26 @@ public class LetterService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void sendLetter(long to, long from, LetterDto.Request dto) {
+    public long sendLetter(long to, long from, LetterDto.Request dto) {
         User taken = userRepository.findById(to).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
         User send = userRepository.findById(from).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
+        dto.setFromUser(from);
+        dto.setToUser(to);
         dto.setSendUsername(send.getNickname());
         dto.setTakenUsername(taken.getNickname());
-        dto.setToUser(to);
-        dto.setFromUser(from);
-        letterRepository.save(dto.toEntity());
+        Letter letter = dto.toEntity();
+        letterRepository.save(letter);
+        return letter.getId();
     }
 
     @Transactional(readOnly = true)
-    public Page<Letter> findSendList(Long id, Pageable pageable) {
+    public Page<Letter> findSendList(long id, Pageable pageable) {
         userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("찾을 수 없는 회원입니다."));
         return letterRepository.findAllByFromUser(id, pageable);
     }
 
     @Transactional(readOnly = true)
-    public Page<Letter> findTakenList(Long id, Pageable pageable) {
+    public Page<Letter> findTakenList(long id, Pageable pageable) {
         userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("찾을 수 없는 회원입니다."));
         return letterRepository.findAllByToUser(id, pageable);
     }

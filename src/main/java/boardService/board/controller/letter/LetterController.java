@@ -78,9 +78,9 @@ public class LetterController {
     public String sendLetterRead(@PathVariable long id, Model model, @LoginUser UserDto.Response user){
         if(user != null){
             Letter letter = letterService.findLetter(id);
-            if(letter.getFromUser() != user.getId() && letter.getToUser() != user.getId()){
-                throw new IllegalArgumentException("접근할 수 없습니다.");
-            }
+//            if(letter.getFromUser() != user.getId() && letter.getToUser() != user.getId()){
+//                throw new IllegalArgumentException("접근할 수 없습니다.");
+//            }
             model.addAttribute("user", user);
             model.addAttribute("letter", letter);
         }
@@ -91,9 +91,9 @@ public class LetterController {
     public String takenLetterRead(@PathVariable long id, Model model, @LoginUser UserDto.Response user){
         if(user != null){
             Letter letter = letterService.findLetter(id);
-            if(letter.getFromUser() != user.getId() && letter.getToUser() != user.getId()){
-                throw new IllegalArgumentException("접근할 수 없습니다.");
-            }
+//            if(letter.getFromUser() != user.getId() && letter.getToUser() != user.getId()){
+//                throw new IllegalArgumentException("접근할 수 없습니다.");
+//            }
             model.addAttribute("user", user);
             model.addAttribute("letter", letter);
         }

@@ -6,8 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LetterRepository extends JpaRepository<Letter, Long> {
+    Page<Letter> findAllByToUser(long id, Pageable pageable);
 
-    Page<Letter> findAllByFromUser(Long id, Pageable pageable);
-
-    Page<Letter> findAllByToUser(Long id, Pageable pageable);
+    Page<Letter> findAllByFromUser(long id, Pageable pageable);
 }

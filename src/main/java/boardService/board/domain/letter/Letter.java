@@ -1,6 +1,5 @@
 package boardService.board.domain.letter;
 
-import boardService.board.domain.post.Posts;
 import boardService.board.domain.user.TimeEntity;
 import boardService.board.domain.user.User;
 import lombok.AllArgsConstructor;
@@ -20,10 +19,6 @@ public class Letter extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Column(columnDefinition = "TEXT", nullable = false)
     private String title;
 
@@ -33,10 +28,10 @@ public class Letter extends TimeEntity {
     @Column(nullable = false)
     private String takenUsername;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
-
     private long toUser;
 
     private long fromUser;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String content;
 }

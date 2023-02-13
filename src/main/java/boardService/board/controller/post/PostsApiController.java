@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 public class PostsApiController {
 
     private final PostsService postsService;
-    private final UserService userService;
 
     @PostMapping("/posts")
     public ResponseEntity<?> save(@RequestBody PostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
