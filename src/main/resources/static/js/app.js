@@ -584,6 +584,7 @@ const main = {
     postLetterSave : function () {
         const data = {
             id: $('#id').val(),
+            pageNum: $('#pageNum').val(),
             userId: $('#userId').val(),
             title: $('#title').val(),
             content: $('#content').val()
@@ -601,13 +602,13 @@ const main = {
             if(con_check == true){
                 $.ajax({
                     type: 'POST',
-                    url: '/api/posts/letters/' + data.id,
+                    url: '/api/posts/' + data.pageNum + '/letters/' + data.id,
                     dataType: 'JSON',
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify(data)
                 }).done(function () {
                     alert('성공적으로 보냈습니다.');
-                    window.location.href = '/posts/read/' + data.id;
+                    window.location.href = '/posts/read/' + data.pageNum;
                 }).fail(function (error) {
                     alert(JSON.stringify(error));
                 });

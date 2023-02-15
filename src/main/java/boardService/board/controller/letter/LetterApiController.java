@@ -20,8 +20,8 @@ public class LetterApiController {
         return ResponseEntity.ok(letterService.sendLetter(id, user.getId(), dto));
     }
 
-    @PostMapping("/posts/letters/{id}")
-    public ResponseEntity<?> postsLetters(@PathVariable long id, @RequestBody LetterDto.Request dto, @LoginUser UserDto.Response user){
+    @PostMapping("/posts/{pageNum}/letters/{id}")
+    public ResponseEntity<?> postsLetters(@PathVariable long pageNum, @PathVariable long id, @RequestBody LetterDto.Request dto, @LoginUser UserDto.Response user){
         return ResponseEntity.ok(letterService.sendLetter(id, user.getId(), dto));
     }
 }

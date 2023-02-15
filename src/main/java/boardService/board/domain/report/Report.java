@@ -1,7 +1,5 @@
-package boardService.board.domain.letter;
+package boardService.board.domain.report;
 
-import boardService.board.domain.user.TimeEntity;
-import boardService.board.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
-public class Letter extends TimeEntity {
+public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,18 +20,10 @@ public class Letter extends TimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    private String sendUsername;
-
-    @Column(nullable = false)
-    private String takenUsername;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String content;
 
     private long toUser;
 
     private long fromUser;
-
-    private long pageNum;
-
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
 }

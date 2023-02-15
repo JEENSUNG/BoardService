@@ -63,10 +63,11 @@ public class LetterController {
         return "/user/user-letter";
     }
 
-    @GetMapping("/posts/letters/{id}")
-    public String postsLetters(@PathVariable long id, Model model, @LoginUser UserDto.Response user) {
+    @GetMapping("/posts/{pageNum}/letters/{id}")
+    public String postsLetters(@PathVariable long pageNum, @PathVariable long id, Model model, @LoginUser UserDto.Response user) {
         if(user != null) {
             String nickname = userService.findByNickname(id);
+            model.addAttribute("pageNum", pageNum);
             model.addAttribute("nickname", nickname);
             model.addAttribute("to", id);
             model.addAttribute("user", user);

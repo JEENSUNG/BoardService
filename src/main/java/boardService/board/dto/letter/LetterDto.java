@@ -30,6 +30,34 @@ public class LetterDto {
         }
     }
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class PageRequest {
+
+        private String title;
+        private String sendUsername;
+        private String takenUsername;
+        private String content;
+        private long toUser;
+        private long fromUser;
+        private long pageNum;
+
+        /* Dto -> Entity */
+        public Letter toEntity() {
+            return Letter.builder()
+                    .title(title)
+                    .sendUsername(sendUsername)
+                    .takenUsername(takenUsername)
+                    .content(content)
+                    .toUser(toUser)
+                    .fromUser(fromUser)
+                    .pageNum(pageNum)
+                    .build();
+        }
+    }
+
     @Getter
     public static class Response{
         private final String title;

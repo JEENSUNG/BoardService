@@ -92,6 +92,7 @@ public class PostIndexController {
                 postsService.updateView(id); //자신이 조회하는건 조회수 증가x
             }
         }
+        model.addAttribute("pageNum", id);
         model.addAttribute("to", post.getUserId());
         model.addAttribute("posts", post);
         return "posts/posts-read";
