@@ -4,17 +4,17 @@
     <div class="col-md-12">
         <form class="card">
             <div class="card-header d-flex justify-content-between">
-                <label for="createdDate">{{letter.createdDate}}</label>
+                <label for="createdDate">{{report.createdDate}}</label>
             </div>
             <div class="card-header d-flex justify-content-between">
-                <label for="writer">닉네임 : {{letter.takenUsername}}</label>
+                <label for="writer">닉네임 : {{report.username}}</label>
             </div>
             <div class="card-body">
                 <label for="title">제목</label>
-                <input type="text" class="form-control" id="title" value="{{letter.title}}" readonly>
+                <input type="text" class="form-control" id="title" value="{{report.title}}" readonly>
                 <br/>
                 <label for="content">내용</label>
-                <textarea rows="15" class="form-control" id="content" readonly>{{letter.content}}</textarea>
+                <textarea rows="15" class="form-control" id="content" readonly>{{report.content}}</textarea>
             </div>
         </form>
         {{^user}}

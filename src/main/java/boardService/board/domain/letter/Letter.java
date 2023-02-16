@@ -36,4 +36,11 @@ public class Letter extends TimeEntity {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+
+    public void setToUser(long toUser){
+        this.toUser = toUser;
+    }
+    public void setFromUser(long fromUser){
+        this.fromUser = fromUser;
+    }
 }

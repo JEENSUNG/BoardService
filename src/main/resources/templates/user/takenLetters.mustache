@@ -6,6 +6,7 @@
             <th>보낸사람</th>
             <th>제목</th>
             <th>날짜</th>
+            <th>삭제</th>
         </tr>
         </thead>
         <tbody id="tbody">
@@ -14,6 +15,9 @@
                 <td>{{sendUsername}}</a></td>
                 <td><a href="/letters/{{id}}/send">{{title}}</a></td>
                 <td>{{createdDate}}</td>
+                <td>
+                    <button type="button" id="btn-delete-letter2" class="btn btn-danger">삭제</button>
+                </td>
             </tr>
         {{/letters}}
         </tbody>

@@ -16,32 +16,6 @@ public class LetterDto {
         private String content;
         private long toUser;
         private long fromUser;
-
-        /* Dto -> Entity */
-        public Letter toEntity() {
-            return Letter.builder()
-                    .title(title)
-                    .sendUsername(sendUsername)
-                    .takenUsername(takenUsername)
-                    .content(content)
-                    .toUser(toUser)
-                    .fromUser(fromUser)
-                    .build();
-        }
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-    public static class PageRequest {
-
-        private String title;
-        private String sendUsername;
-        private String takenUsername;
-        private String content;
-        private long toUser;
-        private long fromUser;
         private long pageNum;
 
         /* Dto -> Entity */
@@ -57,7 +31,6 @@ public class LetterDto {
                     .build();
         }
     }
-
     @Getter
     public static class Response{
         private final String title;
@@ -67,7 +40,7 @@ public class LetterDto {
         private final String createdDate;
         private final long toUser;
         private final long fromUser;
-
+        private final long pageNum;
         public Response(Letter letter) {
             this.title = letter.getTitle();
             this.sendUsername = letter.getSendUsername();
@@ -76,6 +49,7 @@ public class LetterDto {
             this.createdDate = letter.getCreatedDate();
             this.toUser = letter.getToUser();
             this.fromUser = letter.getFromUser();
+            this.pageNum = letter.getPageNum();
         }
     }
 }

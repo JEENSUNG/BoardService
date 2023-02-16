@@ -1,5 +1,7 @@
 package boardService.board.domain.report;
 
+import boardService.board.domain.user.TimeEntity;
+import boardService.board.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,10 +14,14 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
-public class Report {
+public class Report extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String title;
@@ -25,5 +31,7 @@ public class Report {
 
     private long toUser;
 
-    private long fromUser;
+    private String nickname;
+
+    private String username;
 }

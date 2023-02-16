@@ -22,13 +22,14 @@ public class LetterService {
     private final UserRepository userRepository;
 
     @Transactional
-    public long sendLetter(long to, long from, LetterDto.Request dto) {
+    public long sendLetter(long to, long from, LetterDto.Request dto, long pageNum) {
         User taken = userRepository.findById(to).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
         User send = userRepository.findById(from).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
-        dto.setFromUser(from);
-        dto.setToUser(to);
-        dto.setSendUsername(send.getNickname());
-        dto.setTakenUsername(taken.getNickname());
+        dto.setToUser(from);
+        dto.setFromUser(to);
+        dto.setTakenUsername(send.getNickname());
+        dto.setSendUsername(taken.getNickname());
+        dto.setPageNum(pageNum);
         Letter letter = dto.toEntity();
         letterRepository.save(letter);
         return letter.getId();
@@ -49,5 +50,16 @@ public class LetterService {
     @Transactional(readOnly = true)
     public Letter findLetter(long id) {
         return letterRepository.findById(id).orElseThrow(() -> new FindException("찾을 수 없습니다."));
+    }
+
+    @Transactional
+    public void deleteToUserLetter(long id) {
+        Letter letter = letterRepository.findById(id).orElseThrow(() -> new FindException("찾을 수 없습니다."));
+        letter.setToUser(0);
+    }
+    @Transactional
+    public void deleteFromUserLetter(long id) {
+        Letter letter = letterRepository.findById(id).orElseThrow(() -> new FindException("찾을 수 없습니다."));
+        letter.setFromUser(0);
     }
 }

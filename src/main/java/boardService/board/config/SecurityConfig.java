@@ -53,6 +53,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/", "/auth/**", "/posts/read/**", "/posts/search/**").permitAll()
                 .antMatchers("/secrets/**").access("hasRole('SOCIAL_VIP') or hasRole('USER_VIP')")
+                .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

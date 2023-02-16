@@ -1,0 +1,39 @@
+{{>layout/header}}
+<div id="posts_list">
+    <table id="table" class="table table-horizontal">
+        <thead id="thead">
+        <a>총 {{size}}개의 신고내역이 있습니다.</a>
+        <tr>
+            <th>신고한유저</th>
+            <th>대상</th>
+            <th>제목</th>
+            <th>날짜</th>
+            <th>제재</th>
+            <th>포인트 회수</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#reports}}
+            <input type="hidden" id="toUser" value="{{toUser}}">
+            <tr>
+                <td>{{username}}</td>
+                <td>{{nickname}}</td>
+                <td><a href="/admin/report/{{id}}">{{title}}</a></td>
+                <td>{{createdDate}}</td>
+                <td>
+                    <button type="button" id="btn-delete-role" class="btn btn-danger">강등</button>
+                </td>
+                <td>
+                    <button type="button" id="btn-delete-point" class="btn btn-secondary">포인트 회수</button>
+                </td>
+                <td>
+                    <button type="button" id="btn-delete-report" class="btn btn-warning">삭제</button>
+                </td>
+            </tr>
+        {{/reports}}
+        </tbody>
+    </table>
+    {{>posts/posts-page}}
+</div>
+{{>layout/footer}}

@@ -193,4 +193,10 @@ public class PostsService {
             searches.get(i - 1).setRanking(i);
         return searches;
     }
+
+    @Transactional(readOnly = true)
+    public String findByPageNum(long pageNum) {
+        Posts posts = postsRepository.findById(pageNum).orElseThrow(() -> new UsernameNotFoundException("찾을 수 없는 게시글입니다."));
+        return posts.getUser().getNickname();
+    }
 }

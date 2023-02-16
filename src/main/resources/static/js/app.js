@@ -49,6 +49,22 @@ const main = {
             _this.postLetterSave();
         });
 
+        //신고하기
+        $('#btn-post-report-save').on('click', function () {
+            _this.postReportSave();
+        });
+        //회원 강등
+        $('#btn-delete-role').on('click', function () {
+            _this.userDeleteRole();
+        });
+        //포인트 회수
+        $('#btn-delete-point').on('click', function () {
+            _this.userDeletePoint();
+        })
+        //신고내역 삭제
+        $('#btn-delete-report').on('click', function () {
+            _this.userDeleteReport();
+        })
         $('#btn-like').on('click', function () {
             _this.like();
         });
@@ -614,7 +630,94 @@ const main = {
                 });
             }
         }
-    }
+    },
+
+     postReportSave: function () {
+          const data = {
+              id: $('#id').val(),
+              pageNum: $('#pageNum').val(),
+              userId: $('#userId').val(),
+              title: $('#title').val(),
+              content: $('#content').val()
+          };
+          const con_check = confirm("신고하시겠습니까?");
+          if(data.userId == data.id){
+              alert("자기 자신의 게시글은 신고할 수 없습니다.");
+              return false;
+          }
+          // 공백 및 빈 문자열 체크
+          if (!data.title || data.title.trim() === "" || !data.content || data.content.trim() === "") {
+              alert("공백 또는 입력하지 않은 부분이 있습니다.");
+              return false;
+          } else {
+              if(con_check == true){
+                  $.ajax({
+                      type: 'POST',
+                      url: '/api/posts/' + data.pageNum + '/report',
+                      dataType: 'JSON',
+                      contentType: 'application/json; charset=utf-8',
+                      data: JSON.stringify(data)
+                  }).done(function () {
+                      alert('성공적으로 보냈습니다.');
+                      window.location.href = '/posts/read/' + data.pageNum;
+                  }).fail(function (error) {
+                      alert(JSON.stringify(error));
+                  });
+              }
+          }
+     },
+     userDeleteRole : function () {
+        const data = {
+             toUser: $('#toUser').val()
+         }
+         $.ajax({
+             type: 'PUT',
+             url: '/api/admin/report/' + data.toUser,
+             dataType: 'JSON',
+             contentType: 'application/json; charset=utf-8',
+             data: JSON.stringify(data)
+         }).done(function () {
+             alert('정상 처리되었습니다.');
+             window.location.reload();
+         }).fail(function (error) {
+             alert(JSON.stringify(error));
+         });
+     },
+     userDeleteReport : function (){
+         const data = {
+              toUser: $('#toUser').val()
+          }
+          $.ajax({
+              type: 'DELETE',
+              url: '/api/admin/report/' + data.toUser,
+              dataType: 'JSON',
+              contentType: 'application/json; charset=utf-8',
+              data: JSON.stringify(data)
+          }).done(function () {
+              alert('정상 처리되었습니다.');
+              window.location.reload();
+          }).fail(function (error) {
+              alert(JSON.stringify(error));
+          });
+     },
+
+     userDeletePoint : function () {
+        const data = {
+            toUser: $('#toUser').val()
+            }
+           $.ajax({
+               type: 'DELETE',
+               url: '/api/admin/report/deletePoint/' + data.toUser,
+               dataType: 'JSON',
+               contentType: 'application/json; charset=utf-8',
+               data: JSON.stringify(data)
+           }).done(function () {
+               alert('정상 처리되었습니다.');
+               window.location.reload();
+           }).fail(function (error) {
+               alert(JSON.stringify(error));
+           });
+     }
 };
 
 main.init();
