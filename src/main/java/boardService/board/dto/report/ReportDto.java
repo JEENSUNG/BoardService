@@ -16,6 +16,7 @@ public class ReportDto {
         private long toUser;
         private String nickname;
         private String username;
+        private boolean isRemoved;
 
         /* Dto -> Entity */
         public Report toEntity() {
@@ -26,6 +27,7 @@ public class ReportDto {
                     .toUser(toUser)
                     .nickname(nickname)
                     .username(username)
+                    .isRemoved(true)
                     .build();
         }
     }
@@ -38,6 +40,7 @@ public class ReportDto {
         private final long toUser;
         private final String nickname;
         private final String username;
+        private final boolean isRemoved;
 
         public Response(Report report) {
             this.title = report.getTitle();
@@ -47,6 +50,7 @@ public class ReportDto {
             this.userId = report.getUser().getId();
             this.nickname = report.getNickname();
             this.username = report.getUsername();
+            this.isRemoved = report.isRemoved();
         }
     }
 }

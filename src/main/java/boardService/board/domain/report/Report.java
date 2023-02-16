@@ -34,4 +34,10 @@ public class Report extends TimeEntity {
     private String nickname;
 
     private String username;
+
+    private boolean isRemoved;
+
+    public void setIsRemoved(boolean isRemoved){
+        this.isRemoved = isRemoved;
+    }
 }

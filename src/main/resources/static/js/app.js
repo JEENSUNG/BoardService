@@ -677,11 +677,11 @@ const main = {
      },
      userDeleteRole : function () {
         const data = {
-             toUser: $('#toUser').val()
+             id: $('#id').val()
          }
          $.ajax({
              type: 'PUT',
-             url: '/api/admin/report/' + data.toUser,
+             url: '/api/admin/report/' + data.id,
              dataType: 'JSON',
              contentType: 'application/json; charset=utf-8',
              data: JSON.stringify(data)
@@ -694,11 +694,11 @@ const main = {
      },
      userDeleteReport : function (){
          const data = {
-              toUser: $('#toUser').val()
+              id: $('#id').val()
           }
           $.ajax({
               type: 'DELETE',
-              url: '/api/admin/report/' + data.toUser,
+              url: '/api/admin/report/' + data.id,
               dataType: 'JSON',
               contentType: 'application/json; charset=utf-8',
               data: JSON.stringify(data)
@@ -712,11 +712,11 @@ const main = {
 
      userDeletePoint : function () {
         const data = {
-            toUser: $('#toUser').val()
+            id: $('#id').val()
             }
            $.ajax({
                type: 'DELETE',
-               url: '/api/admin/report/deletePoint/' + data.toUser,
+               url: '/api/admin/report/deletePoint/' + data.id,
                dataType: 'JSON',
                contentType: 'application/json; charset=utf-8',
                data: JSON.stringify(data)

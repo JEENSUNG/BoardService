@@ -38,7 +38,7 @@ public class ReportService {
 
     @Transactional(readOnly = true)
     public Page<Report> findAll(Pageable pageable) {
-        return reportRepository.findAll(pageable);
+        return reportRepository.findAllByIsRemoved(pageable, true);
     }
 
     @Transactional(readOnly = true)
@@ -55,14 +55,14 @@ public class ReportService {
         }else if(user.getRole() == Role.SOCIAL_VIP){
             user.setRole(Role.SOCIAL);
         }
-        reportRepository.delete(report);
+        report.setIsRemoved(false);
         userRepository.save(user);
     }
 
     @Transactional
     public void deleteReport(long id) {
         Report report = reportRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 게시글입니다."));
-        reportRepository.delete(report);
+        report.setIsRemoved(false);
     }
 
     @Transactional
@@ -71,7 +71,7 @@ public class ReportService {
         User user = userRepository.findById(report.getToUser()).orElseThrow(() -> new UsernameNotFoundException("찾을 수 없는 회원입니다."));
         if(user.getPoint() >= 0)
             user.setPoint(0);
-        reportRepository.delete(report);
+        report.setIsRemoved(false);
         userRepository.save(user);
     }
 }
