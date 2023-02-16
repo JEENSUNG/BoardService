@@ -3,7 +3,7 @@
     <table id="table" class="table table-horizontal">
         <thead id="thead">
         <tr>
-            <th>보낸사람</th>
+            <th>받는사람</th>
             <th>제목</th>
             <th>날짜</th>
             <th>삭제</th>
@@ -12,7 +12,8 @@
         <tbody id="tbody">
         {{#letters}}
             <tr>
-                <td>{{sendUsername}}</a></td>
+                <input type="hidden" id="id" value="{{id}}">
+                <td>{{takenUsername}}</a></td>
                 <td><a href="/letters/{{id}}/send">{{title}}</a></td>
                 <td>{{createdDate}}</td>
                 <td>

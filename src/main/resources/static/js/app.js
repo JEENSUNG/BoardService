@@ -49,6 +49,15 @@ const main = {
             _this.postLetterSave();
         });
 
+        //쪽지 삭제
+        $('#btn-delete-letter').on('click', function() {
+            _this.deleteLetter();
+        });
+
+        $('#btn-delete-letter2').on('click', function () {
+            _this.deleteLetter2();
+        });
+
         //신고하기
         $('#btn-post-report-save').on('click', function () {
             _this.postReportSave();
@@ -717,6 +726,42 @@ const main = {
            }).fail(function (error) {
                alert(JSON.stringify(error));
            });
+     },
+
+     deleteLetter : function () {
+        const data = {
+            id: $('#id').val()
+            }
+           $.ajax({
+               type: 'DELETE',
+               url: '/api/sendLetters/delete/' + data.id,
+               dataType: 'JSON',
+               contentType: 'application/json; charset=utf-8',
+               data: JSON.stringify(data)
+           }).done(function () {
+               alert('정상 처리되었습니다.');
+               window.location.reload();
+           }).fail(function (error) {
+               alert(JSON.stringify(error));
+           });
+     },
+
+     deleteLetter2 : function(){
+        const data = {
+             id: $('#id').val()
+             }
+            $.ajax({
+                type: 'DELETE',
+                url: '/api/takenLetters/delete/' + data.id,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function () {
+                alert('정상 처리되었습니다.');
+                window.location.reload();
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
      }
 };
 
