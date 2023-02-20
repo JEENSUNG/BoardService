@@ -71,10 +71,4 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
         return user.getNickname();
     }
-
-    @Transactional(readOnly = true)
-    public boolean check(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new FindException("해당 회원이 존재하지않습니다."));
-        return user.getRole().equals(Role.USER_VIP) || user.getRole().equals(Role.SOCIAL_VIP);
-    }
 }

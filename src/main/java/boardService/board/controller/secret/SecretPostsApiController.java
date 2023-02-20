@@ -18,12 +18,6 @@ import javax.servlet.http.HttpSession;
 //@PreAuthorize("hasAnyRole({'ROLE_VIP', 'ROLE_SOCIAL_VIP'})")
 public class SecretPostsApiController {
     private final SecretPostsService secretPostsService;
-    private final UserService userService;
-    @GetMapping
-    public ResponseEntity<?> check(@RequestBody UserDto.Response user){
-        boolean isVip = userService.check(user.getId());
-        return ResponseEntity.ok(new Result<>(isVip));
-    }
 
     @PostMapping("/api/posts")
     public ResponseEntity<?> save(@RequestBody SecretPostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
