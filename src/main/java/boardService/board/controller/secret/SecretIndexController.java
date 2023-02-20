@@ -40,7 +40,7 @@ public class SecretIndexController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", pages.hasNext());
         model.addAttribute("hasPrev", pages.hasPrevious());
-        return "/secrets/index";
+        return "secrets/index";
     }
 
     @GetMapping("/posts/write")
@@ -48,7 +48,7 @@ public class SecretIndexController {
         if(user != null){
             model.addAttribute("user", user);
         }
-        return "/secrets/posts-write";
+        return "secrets/posts-write";
     }
 
     @GetMapping("/posts/read/{id}")
@@ -74,7 +74,7 @@ public class SecretIndexController {
             }
         }
         model.addAttribute("posts", secretPosts);
-        return "/secrets/posts-read";
+        return "secrets/posts-read";
     }
 
     @GetMapping("/posts/update/{id}")
@@ -84,7 +84,7 @@ public class SecretIndexController {
             model.addAttribute("user", user);
         }
         model.addAttribute("posts", secretPosts);
-        return "/secrets/posts-update";
+        return "secrets/posts-update";
     }
 
     @GetMapping("/posts/search")
@@ -101,6 +101,6 @@ public class SecretIndexController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", pages.hasNext());
         model.addAttribute("hasPrev", pages.hasPrevious());
-        return "/secrets/posts-search";
+        return "secrets/posts-search";
     }
 }

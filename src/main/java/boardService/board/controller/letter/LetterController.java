@@ -60,7 +60,7 @@ public class LetterController {
             model.addAttribute("to", id);
             model.addAttribute("user", user);
         }
-        return "/user/user-letter";
+        return "user/user-letter";
     }
 
     @GetMapping("/posts/{pageNum}/letters/{id}")
@@ -72,7 +72,7 @@ public class LetterController {
             model.addAttribute("to", id);
             model.addAttribute("user", user);
         }
-        return "/posts/user-letter";
+        return "posts/user-letter";
     }
 
     @GetMapping("/letters/{id}/send")
@@ -86,7 +86,7 @@ public class LetterController {
             model.addAttribute("user", user);
             model.addAttribute("letter", letter);
         }
-        return "/user/letter-read-send";
+        return "user/letter-read-send";
     }
 
     @GetMapping("/letters/{id}/taken")
@@ -100,6 +100,6 @@ public class LetterController {
             model.addAttribute("user", user);
             model.addAttribute("letter", letter);
         }
-        return "/user/letter-read-taken";
+        return "user/letter-read-taken";
     }
 }

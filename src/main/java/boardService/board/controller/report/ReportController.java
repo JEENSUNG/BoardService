@@ -34,7 +34,7 @@ public class ReportController {
             model.addAttribute("nickname", nickname);
             model.addAttribute("user", user);
         }
-        return "/admin/report-write";
+        return "admin/report-write";
     }
 
     @GetMapping("/admin/reportList")
@@ -50,7 +50,7 @@ public class ReportController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", reports.hasNext());
         model.addAttribute("hasPrev", reports.hasPrevious());
-        return "/admin/report-list";
+        return "admin/report-list";
     }
 
     @GetMapping("/admin/report/{id}")
@@ -61,6 +61,6 @@ public class ReportController {
         Report report = reportService.findReport(id);
         model.addAttribute("report", report);
         model.addAttribute("user", user);
-        return "/admin/report-page";
+        return "admin/report-page";
     }
 }
