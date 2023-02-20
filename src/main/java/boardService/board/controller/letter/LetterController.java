@@ -34,7 +34,7 @@ public class LetterController {
             model.addAttribute("hasNext", letters.hasNext());
             model.addAttribute("hasPrev", letters.hasPrevious());
         }
-        return "/user/sendLetters";
+        return "user/sendLetters";
     }
 
     @GetMapping("/takenLetters")
@@ -49,7 +49,7 @@ public class LetterController {
             model.addAttribute("hasNext", letters.hasNext());
             model.addAttribute("hasPrev", letters.hasPrevious());
         }
-        return "/user/takenLetters";
+        return "user/takenLetters";
     }
 
     @GetMapping("/user/letters/{id}")

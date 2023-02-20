@@ -1,6 +1,7 @@
 package boardService.board.service.user;
 
 import boardService.board.domain.letter.Letter;
+import boardService.board.domain.user.Role;
 import boardService.board.domain.user.User;
 import boardService.board.dto.letter.LetterDto;
 import boardService.board.dto.user.UserDto;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import java.lang.module.FindException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,5 +70,11 @@ public class UserService {
     public String findByNickname(long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
         return user.getNickname();
+    }
+
+    @Transactional(readOnly = true)
+    public boolean check(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new FindException("해당 회원이 존재하지않습니다."));
+        return user.getRole().equals(Role.USER_VIP) || user.getRole().equals(Role.SOCIAL_VIP);
     }
 }

@@ -13,6 +13,9 @@ const main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+        $('#btn-secret').on('click', function () {
+            _this.secret();
+        });
         //비밀 게시판 저장
         $('#btn-secret-save').on('click', function () {
             _this.secretSave();
@@ -129,6 +132,24 @@ const main = {
                 alert(JSON.stringify(error));
             });
         }
+    },
+
+    secret : function () {
+        $.ajax({
+            type: 'GET',
+            url: '/secrets',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function (dat, status, xhr) {
+            alert('등록되었습니다.');
+            window.location.href = '/secrets';
+            if(!JSON.parse(dat.vip)){
+                alert("포인트 200점 이상의 VIP 회원만 접근 가능합니다.");
+            }
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
     },
 
     /** 비밀글 작성 */
