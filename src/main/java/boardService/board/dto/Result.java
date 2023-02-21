@@ -13,8 +13,4 @@ public class Result<T> {
         this.data = data;
         this.vip = vip;
     }
-
-    public Result(boolean vip){
-        this.vip = vip;
-    }
 }

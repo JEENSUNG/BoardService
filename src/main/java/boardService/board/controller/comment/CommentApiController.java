@@ -23,7 +23,7 @@ public class CommentApiController {
     public ResponseEntity<?> save(@PathVariable long id, @RequestBody CommentDto.Request dto,
                                   @LoginUser UserDto.Response userDto, HttpSession httpSession){
         long commentId = commentService.save(id, userDto.getNickname(), dto);
-        boolean isVip = commentService.check(userDto.getId());
+        boolean isVip = commentService.check(userDto.getId(), userDto.getRole());
         UserDto.Response entity = commentService.session(userDto.getUsername());
         httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(new Result<>(commentId, isVip));

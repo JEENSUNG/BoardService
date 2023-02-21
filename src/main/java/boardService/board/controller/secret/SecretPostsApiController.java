@@ -14,12 +14,12 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/secrets")
+@RequestMapping("/api/secrets")
 //@PreAuthorize("hasAnyRole({'ROLE_VIP', 'ROLE_SOCIAL_VIP'})")
 public class SecretPostsApiController {
     private final SecretPostsService secretPostsService;
 
-    @PostMapping("/api/posts")
+    @PostMapping("/posts")
     public ResponseEntity<?> save(@RequestBody SecretPostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
         long id = secretPostsService.save(dto, user.getNickname());
         boolean isVip = secretPostsService.check(user.getId(), user.getRole());
@@ -28,18 +28,18 @@ public class SecretPostsApiController {
         return ResponseEntity.ok(new Result<>(id, isVip));
     }
 
-    @GetMapping("/api/posts/{id}")
+    @GetMapping("/posts/{id}")
     public ResponseEntity<?> read(@PathVariable long id){
         return ResponseEntity.ok(secretPostsService.findById(id));
     }
 
-    @PutMapping("/api/posts/{id}")
+    @PutMapping("/posts/{id}")
     public ResponseEntity<?> update(@PathVariable long id, @RequestBody SecretPostsDto.Request dto){
         secretPostsService.update(id, dto);
         return ResponseEntity.ok(id);
     }
 
-    @DeleteMapping("/api/posts/{id}")
+    @DeleteMapping("/posts/{id}")
     public ResponseEntity<?> delete(@PathVariable long id, @LoginUser UserDto.Response user, HttpSession httpSession){
         secretPostsService.delete(id);
         UserDto.Response entity = secretPostsService.session(user.getUsername());
@@ -47,13 +47,13 @@ public class SecretPostsApiController {
         return ResponseEntity.ok(id);
     }
 
-    @PostMapping("/api/posts/{id}/like")
+    @PostMapping("/posts/{id}/like")
     public ResponseEntity<?> like(@PathVariable long id, @LoginUser UserDto.Response dto){
         secretPostsService.like(id, dto);
         return ResponseEntity.ok(id);
     }
 
-    @PostMapping("/api/posts/{id}/disLike")
+    @PostMapping("/posts/{id}/disLike")
     public ResponseEntity<?> disLike(@PathVariable long id, @LoginUser UserDto.Response dto){
         secretPostsService.disLike(id, dto);
         return ResponseEntity.ok(id);

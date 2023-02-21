@@ -152,9 +152,6 @@ const main = {
             }).done(function (dat, status, xhr) {
                 alert('등록되었습니다.');
                 window.location.href = '/secrets/posts/read/' + JSON.parse(dat.data);
-                if(JSON.parse(dat.vip)){
-                    alert("축하합니다! VIP 등급으로 승급하셨니다.");
-                }
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });

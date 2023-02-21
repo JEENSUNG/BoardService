@@ -24,7 +24,7 @@ public class SecretCommentApiController {
     public ResponseEntity<?> save(@PathVariable long id, @RequestBody SecretCommentDto.Request dto,
                                   @LoginUser UserDto.Response userDto, HttpSession httpSession){
         long commentId = secretCommentService.save(id, userDto.getNickname(), dto);
-        boolean isVip = secretCommentService.check(userDto.getId());
+        boolean isVip = secretCommentService.check(userDto.getId(), userDto.getRole());
         UserDto.Response entity = secretCommentService.session(userDto.getUsername());
         httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(new Result<>(commentId, isVip));
