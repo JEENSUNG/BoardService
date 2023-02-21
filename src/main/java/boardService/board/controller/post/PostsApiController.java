@@ -1,5 +1,6 @@
 package boardService.board.controller.post;
 
+import boardService.board.domain.user.Role;
 import boardService.board.dto.letter.LetterDto;
 import boardService.board.dto.post.PostsDto;
 import boardService.board.dto.Result;
@@ -22,8 +23,9 @@ public class PostsApiController {
 
     @PostMapping("/posts")
     public ResponseEntity<?> save(@RequestBody PostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
+        Role now = user.getRole();
         long id = postsService.save(dto, user.getNickname());
-        boolean isVip = postsService.check(user.getId(), user.getRole());
+        boolean isVip = postsService.check(user.getId(), now);
         UserDto.Response entity = postsService.session(user.getUsername());
         httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(new Result<>(id, isVip));

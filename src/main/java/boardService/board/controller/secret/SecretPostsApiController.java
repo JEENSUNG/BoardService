@@ -1,5 +1,6 @@
 package boardService.board.controller.secret;
 
+import boardService.board.domain.user.Role;
 import boardService.board.dto.Result;
 import boardService.board.dto.secret.SecretPostsDto;
 import boardService.board.dto.user.UserDto;
@@ -22,10 +23,9 @@ public class SecretPostsApiController {
     @PostMapping("/posts")
     public ResponseEntity<?> save(@RequestBody SecretPostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
         long id = secretPostsService.save(dto, user.getNickname());
-        boolean isVip = secretPostsService.check(user.getId(), user.getRole());
         UserDto.Response entity = secretPostsService.session(user.getUsername());
         httpSession.setAttribute("user", entity);
-        return ResponseEntity.ok(new Result<>(id, isVip));
+        return ResponseEntity.ok(id);
     }
 
     @GetMapping("/posts/{id}")

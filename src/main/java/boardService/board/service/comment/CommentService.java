@@ -95,7 +95,7 @@ public class CommentService {
     public boolean check(Long id, Role role) {
         User user = userRepository.findById(id).orElseThrow(() ->
                 new UsernameNotFoundException("찾을 수 없는 사용자입니다."));
-        return user.getRole().equals(role) && user.getPoint() >= 200 && (user.getRole().equals(Role.USER_VIP)) || (user.getRole().equals(Role.SOCIAL_VIP));
+        return !user.getRole().equals(role) && user.getPoint() >= 200 && (user.getRole().equals(Role.USER_VIP)) || (user.getRole().equals(Role.SOCIAL_VIP));
     }
 
     @Transactional(readOnly = true)

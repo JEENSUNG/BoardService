@@ -1,5 +1,6 @@
 package boardService.board.controller.comment;
 
+import boardService.board.domain.user.Role;
 import boardService.board.dto.post.CommentDto;
 import boardService.board.dto.Result;
 import boardService.board.dto.user.UserDto;
@@ -22,8 +23,9 @@ public class CommentApiController {
     @PostMapping("/posts/{id}/comments")
     public ResponseEntity<?> save(@PathVariable long id, @RequestBody CommentDto.Request dto,
                                   @LoginUser UserDto.Response userDto, HttpSession httpSession){
+        Role now = userDto.getRole();
         long commentId = commentService.save(id, userDto.getNickname(), dto);
-        boolean isVip = commentService.check(userDto.getId(), userDto.getRole());
+        boolean isVip = commentService.check(userDto.getId(), now);
         UserDto.Response entity = commentService.session(userDto.getUsername());
         httpSession.setAttribute("user", entity);
         return ResponseEntity.ok(new Result<>(commentId, isVip));

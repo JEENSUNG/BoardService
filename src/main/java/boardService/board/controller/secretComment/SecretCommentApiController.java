@@ -1,5 +1,6 @@
 package boardService.board.controller.secretComment;
 
+import boardService.board.domain.user.Role;
 import boardService.board.dto.Result;
 import boardService.board.dto.user.UserDto;
 import boardService.board.dto.secret.SecretCommentDto;
@@ -24,10 +25,9 @@ public class SecretCommentApiController {
     public ResponseEntity<?> save(@PathVariable long id, @RequestBody SecretCommentDto.Request dto,
                                   @LoginUser UserDto.Response userDto, HttpSession httpSession){
         long commentId = secretCommentService.save(id, userDto.getNickname(), dto);
-        boolean isVip = secretCommentService.check(userDto.getId(), userDto.getRole());
         UserDto.Response entity = secretCommentService.session(userDto.getUsername());
         httpSession.setAttribute("user", entity);
-        return ResponseEntity.ok(new Result<>(commentId, isVip));
+        return ResponseEntity.ok(commentId);
     }
 
     @GetMapping("/posts/{id}/comments")
