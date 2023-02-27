@@ -3,6 +3,8 @@ package boardService.board.dto.letter;
 import boardService.board.domain.letter.Letter;
 import lombok.*;
 
+import java.io.Serializable;
+
 public class LetterDto {
     @Data
     @AllArgsConstructor
@@ -32,7 +34,7 @@ public class LetterDto {
         }
     }
     @Getter
-    public static class Response{
+    public static class Response implements Serializable {
         private final String title;
         private final String sendUsername;
         private final String takenUsername;

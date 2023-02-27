@@ -1,0 +1,17 @@
+{{>layout/header}}
+<div id="posts_list">
+    <div class="container col-md-4">
+        <form>
+            <input type="hidden" id="userId" value="{{user.id}}">
+            <div class="form-group">
+                <label>이름</label>
+                <input type="text" name="username" id = "username" class="form-control" placeholder="성함을 입력해주세요"/>
+                <td>
+                    <button type="button" id="btn-bank-check-username" class="btn btn-secondary">중복 확인</button>
+                </td>
+            </div>
+            <button type="button" id="btn-bank-save" class="btn btn-primary bi bi-pencil-fill"> 계좌 개설</button>
+        </form>
+    </div>
+</div>
+{{>layout/footer}}

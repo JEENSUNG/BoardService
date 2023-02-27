@@ -4,6 +4,7 @@ import boardService.board.domain.post.Posts;
 import boardService.board.domain.user.User;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,7 @@ public class PostsDto {
      * 별도의 전달 객체를 활용해 연관관계를 맺은 엔티티간의 무한참조를 방지
      */
     @Getter
-    public static class Response {
+    public static class Response implements Serializable {
         private final Long id;
         private final String title;
         private final String writer;

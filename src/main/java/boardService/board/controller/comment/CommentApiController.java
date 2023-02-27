@@ -25,9 +25,9 @@ public class CommentApiController {
                                   @LoginUser UserDto.Response userDto, HttpSession httpSession){
         Role now = userDto.getRole();
         long commentId = commentService.save(id, userDto.getNickname(), dto);
-        boolean isVip = commentService.check(userDto.getId(), now);
         UserDto.Response entity = commentService.session(userDto.getUsername());
         httpSession.setAttribute("user", entity);
+        boolean isVip = commentService.check(userDto.getId(), now);
         return ResponseEntity.ok(new Result<>(commentId, isVip));
     }
 

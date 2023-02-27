@@ -25,9 +25,9 @@ public class PostsApiController {
     public ResponseEntity<?> save(@RequestBody PostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
         Role now = user.getRole();
         long id = postsService.save(dto, user.getNickname());
-        boolean isVip = postsService.check(user.getId(), now);
         UserDto.Response entity = postsService.session(user.getUsername());
         httpSession.setAttribute("user", entity);
+        boolean isVip = postsService.check(user.getId(), now);
         return ResponseEntity.ok(new Result<>(id, isVip));
     }
 

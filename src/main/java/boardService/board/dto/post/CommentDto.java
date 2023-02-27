@@ -4,6 +4,8 @@ import boardService.board.domain.post.Posts;
 import boardService.board.domain.user.User;
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * request, response DTO 클래스를 하나로 묶어 InnerStaticClass로 한 번에 관리
  */
@@ -44,7 +46,7 @@ public class CommentDto {
      */
 //    @RequiredArgsConstructor
     @Getter
-    public static class Response {
+    public static class Response  implements Serializable {
         private final Long id;
         private final String comment;
 //        private String createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));

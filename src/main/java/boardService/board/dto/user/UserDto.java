@@ -36,6 +36,7 @@ public class UserDto {
 
         private Role role;
         private int point;
+        private boolean isBank;
 
         /* DTO -> Entity */
         public User toEntity() {
@@ -47,6 +48,7 @@ public class UserDto {
                     .email(email)
                     .role(Role.USER)
                     .point(0)
+                    .isBank(false)
                     .build();
         }
     }
@@ -68,6 +70,7 @@ public class UserDto {
         private final Role role;
         private final int point;
         private final String modifiedDate;
+        private final boolean isBank;
 
         /* Entity -> dto */
         public Response(User user) {
@@ -77,6 +80,7 @@ public class UserDto {
             this.email = user.getEmail();
             this.role = user.getRole();
             this.point = user.getPoint();
+            this.isBank = user.isBank();
             this.modifiedDate = user.getModifiedDate();
         }
     }

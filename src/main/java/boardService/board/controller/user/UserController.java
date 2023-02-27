@@ -119,4 +119,5 @@ public class UserController {
         model.addAttribute("hasPrev", userList.hasPrevious());
         return "user/user-list";
     }
+
 }

@@ -37,6 +37,9 @@ public class User extends TimeEntity {
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int point;
 
+    @Column(nullable = false)
+    private boolean isBank;
+
     /* 회원정보 수정 */
     public void modify(String nickname, String password) {
         this.nickname = nickname;
@@ -49,6 +52,10 @@ public class User extends TimeEntity {
 
     public void setRole(Role role){
         this.role = role;
+    }
+
+    public void setIsBank(boolean isBank){
+        this.isBank = isBank;
     }
 
     /* 소셜로그인시 이미 등록된 회원이라면 수정날짜만 업데이트해줘서

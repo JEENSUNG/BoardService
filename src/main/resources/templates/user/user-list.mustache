@@ -7,7 +7,6 @@
             <th>번호</th>
             <th>닉네임</th>
             <th>쪽지보내기</th>
-            <th>신고</th>
             <th>가입일</th>
         </tr>
         </thead>
@@ -17,7 +16,6 @@
                 <td>{{id}}</td>
                 <td>{{nickname}}</a></td>
                 <td><a href="/user/letters/{{id}}">쪽지보내기</a></td>
-                <td><a href="/user/report/{{id}}">신고하기</a></td>
                 <td>{{createdDate}}</td>
             </tr>
         {{/userList}}

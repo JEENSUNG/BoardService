@@ -57,7 +57,14 @@ const main = {
         $('#btn-delete-letter2').on('click', function () {
             _this.deleteLetter2();
         });
-
+        //아이디 중복검사
+        $('#btn-bank-check-username').on('click', function () {
+            _this.bankCheckUsername();
+        })
+        //계좌 개설
+        $('#btn-bank-save').on('click', function () {
+            _this.bankSave();
+        })
         //신고하기
         $('#btn-post-report-save').on('click', function () {
             _this.postReportSave();
@@ -756,6 +763,53 @@ const main = {
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
+     },
+
+     bankCheckUsername : function (){
+        const data = {
+            username: $('#username').val()
+        }
+       $.ajax({
+           type: 'POST',
+           url: '/api/bank/check/' + data.username,
+           dataType: 'JSON',
+           contentType: 'application/json; charset=utf-8',
+           data: JSON.stringify(data)
+       }).done(function (dat, status, xhr) {
+           if(dat.check){
+            alert('이미 사용하고 있는 아이디입니다.');
+           }
+           else{
+            alert('사용해도 좋은 아이디입니다.')
+           }
+       }).fail(function (error) {
+           alert(JSON.stringify(error));
+       });
+     },
+
+     bankSave: function () {
+         const data = {
+             userId: $('#userId').val(),
+             username: $('#username').val()
+         };
+         // 공백 및 빈 문자열 체크
+         if (!data.username || data.username.trim() === "") {
+             alert("공백 또는 입력하지 않은 부분이 있습니다.");
+             return false;
+         } else {
+             $.ajax({
+                 type: 'POST',
+                 url: '/api/bank/save/bnk',
+                 dataType: 'TEXT',
+                 contentType: 'application/json; charset=utf-8',
+                 data: JSON.stringify(data)
+             }).done(function () {
+                  alert('정상 처리되었습니다.');
+                  window.location.href = '/bank/welcome/bnk';
+             }).fail(function (error) {
+                 alert(JSON.stringify(error));
+             });
+         }
      }
 };
 

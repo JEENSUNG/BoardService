@@ -4,6 +4,8 @@ import boardService.board.domain.report.Report;
 import boardService.board.domain.user.User;
 import lombok.*;
 
+import java.io.Serializable;
+
 public class ReportDto {
     @Data
     @AllArgsConstructor
@@ -32,7 +34,7 @@ public class ReportDto {
         }
     }
     @Getter
-    public static class Response{
+    public static class Response implements Serializable {
         private final String title;
         private final long userId;
         private final String content;

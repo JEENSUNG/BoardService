@@ -5,6 +5,8 @@ import boardService.board.domain.secret.SecretComment;
 import boardService.board.domain.secret.SecretPosts;
 import lombok.*;
 
+import java.io.Serializable;
+
 public class SecretCommentDto {
 
     /** 댓글 Service 요청을 위한 DTO 클래스 */
@@ -42,7 +44,7 @@ public class SecretCommentDto {
      */
 //    @RequiredArgsConstructor
     @Getter
-    public static class Response {
+    public static class Response implements Serializable {
         private final Long id;
         private final String comment;
 //        private String createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));

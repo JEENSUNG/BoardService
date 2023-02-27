@@ -28,8 +28,10 @@ public class Letter extends TimeEntity {
     @Column(nullable = false)
     private String takenUsername;
 
+    @Column(nullable = false)
     private long toUser;
 
+    @Column(nullable = false)
     private long fromUser;
 
     private long pageNum;
