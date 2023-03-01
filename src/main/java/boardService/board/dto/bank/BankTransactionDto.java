@@ -1,52 +1,49 @@
 package boardService.board.dto.bank;
 
+import boardService.board.domain.bank.BankName;
 import boardService.board.domain.bank.BankTransaction;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 public class BankTransactionDto {
+
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
     public static class Request {
-
+        @NotBlank(message = "BNK, IBK, KNB 중에서 입력해주세요.")
         private String bankName;
 
-        private String toBankName;
-
+        @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$", message = "닉네임은 특수문자를 제외한 2~10자리여야 합니다.")
+        @NotBlank(message = "닉네임은 필수 입력 값입니다.")
         private String username;
-
-        private String toUsername;
-
+        @NotBlank(message = "xxx-xxxxx-xx 형태로 입력해주세요.")
         private String account;
-
-        private String toAccount;
-
+        @NotBlank(message = "어떤 용도로 송금하는지 입력해주세요.")
         private String explanation;
 
+        @NotBlank(message = "현재 보유 금액 이하의 금액을 입력해주세요.")
         private int money;
 
         /* Dto -> Entity */
         public BankTransaction toEntity() {
             return BankTransaction.builder()
-                    .bankName(bankName)
-                    .toBankName(toBankName)
+                    .bankName(BankName.valueOf(bankName))
                     .username(username)
-                    .toUsername(toUsername)
                     .account(account)
-                    .toAccount(toAccount)
                     .explanation(explanation)
-                    .money(money)
                     .build();
         }
     }
     @Getter
     public static class Response implements Serializable {
-        private final String bankName;
+        private final BankName bankName;
 
-        private final String toBankName;
+        private final BankName toBankName;
 
         private final String username;
 

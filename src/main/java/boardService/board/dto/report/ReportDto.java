@@ -4,6 +4,7 @@ import boardService.board.domain.report.Report;
 import boardService.board.domain.user.User;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public class ReportDto {
@@ -12,8 +13,10 @@ public class ReportDto {
     @NoArgsConstructor
     @Builder
     public static class Request {
+        @NotBlank(message = "제목을 입력해주세요.")
         private String title;
         private User user;
+        @NotBlank(message = "내용을 입력해주세요.")
         private String content;
         private long toUser;
         private String nickname;

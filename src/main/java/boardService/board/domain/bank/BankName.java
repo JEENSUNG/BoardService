@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum BankName {
-    BNK("BANK_BNK"),
-    KNB("BANK_KNB"),
-    IBK("BANK_IBK");
+    BNK("부산은행"),
+    KNB("경남은행"),
+    IBK("기업은행");
 
     private final String value;
 }

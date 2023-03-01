@@ -1,10 +1,6 @@
 package boardService.board.controller.user;
 
-import boardService.board.dto.Result;
-import boardService.board.dto.letter.LetterDto;
-import boardService.board.dto.post.PostsDto;
 import boardService.board.dto.user.UserDto;
-import boardService.board.security.auth.LoginUser;
 import boardService.board.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
@@ -25,7 +21,7 @@ public class UserApiController {
     private final AuthenticationManager authenticationManager;
 
     @PutMapping
-    public ResponseEntity<?> modify(@RequestBody UserDto.Request dto){
+    public ResponseEntity<?> modify(@RequestBody @Valid UserDto.Request dto){
         userService.modify(dto);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));

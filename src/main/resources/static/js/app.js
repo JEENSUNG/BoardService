@@ -62,8 +62,24 @@ const main = {
             _this.bankCheckUsername();
         })
         //계좌 개설
-        $('#btn-bank-save').on('click', function () {
-            _this.bankSave();
+        $('#btn-bank-save-bnk').on('click', function () {
+            _this.bankSaveBNK();
+        })
+        $('#btn-bank-save-knb').on('click', function () {
+            _this.bankSaveKNB();
+        })
+        $('#btn-bank-save-ibk').on('click', function () {
+            _this.bankSaveIBK();
+        })
+        $('#btn-bank-find').on('click', function () {
+            _this.bankFind();
+        })
+        //계좌 유효성검사
+        $('#btn-bank-check').on('click', function () {
+            _this.bankCheck();
+        })
+        $('#btn-bank-transfer').on('click', function () {
+            _this.bankTransfer();
         })
         //신고하기
         $('#btn-post-report-save').on('click', function () {
@@ -776,7 +792,7 @@ const main = {
            contentType: 'application/json; charset=utf-8',
            data: JSON.stringify(data)
        }).done(function (dat, status, xhr) {
-           if(dat.check){
+           if(dat.data){
             alert('이미 사용하고 있는 아이디입니다.');
            }
            else{
@@ -787,7 +803,7 @@ const main = {
        });
      },
 
-     bankSave: function () {
+     bankSaveBNK: function () {
          const data = {
              userId: $('#userId').val(),
              username: $('#username').val()
@@ -810,6 +826,116 @@ const main = {
                  alert(JSON.stringify(error));
              });
          }
+     },
+     bankSaveKNB: function () {
+          const data = {
+              userId: $('#userId').val(),
+              username: $('#username').val()
+          };
+          // 공백 및 빈 문자열 체크
+          if (!data.username || data.username.trim() === "") {
+              alert("공백 또는 입력하지 않은 부분이 있습니다.");
+              return false;
+          } else {
+              $.ajax({
+                  type: 'POST',
+                  url: '/api/bank/save/knb',
+                  dataType: 'TEXT',
+                  contentType: 'application/json; charset=utf-8',
+                  data: JSON.stringify(data)
+              }).done(function () {
+                   alert('정상 처리되었습니다.');
+                   window.location.href = '/bank/welcome/knb';
+              }).fail(function (error) {
+                  alert(JSON.stringify(error));
+              });
+          }
+      }
+     ,
+     bankSaveIBK: function () {
+          const data = {
+              userId: $('#userId').val(),
+              username: $('#username').val()
+          };
+          // 공백 및 빈 문자열 체크
+          if (!data.username || data.username.trim() === "") {
+              alert("공백 또는 입력하지 않은 부분이 있습니다.");
+              return false;
+          } else {
+              $.ajax({
+                  type: 'POST',
+                  url: '/api/bank/save/ibk',
+                  dataType: 'TEXT',
+                  contentType: 'application/json; charset=utf-8',
+                  data: JSON.stringify(data)
+              }).done(function () {
+                   alert('정상 처리되었습니다.');
+                   window.location.href = '/bank/welcome/ibk';
+              }).fail(function (error) {
+                  alert(JSON.stringify(error));
+              });
+          }
+      },
+      bankFind : function () {
+          const data = {
+                userId: $('#userId').val()
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/api/bank/find/' + data.userId,
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function (dat) {
+                 alert('고객님의 계좌번호는 ' + dat.data + '입니다!');
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+     },
+
+     bankCheck : function (){
+        const data = {
+            name : $('#name').val(),
+            account : $('#account').val(),
+            bankName : $('#bankName').val()
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/api/bank/check',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function (dat, status, xhr) {
+        if(dat.data){
+            alert('유효한 계좌입니다.');
+        }
+        else if(!dat.data){
+            alert('찾을 수 없는 계좌입니다.')
+        }
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+     },
+     bankTransfer : function () {
+        const data = {
+            username : $('#name').val(),
+            account : $('#account').val(),
+            bankName : $('#bankName').val(),
+            money : $('#money').val(),
+            explanation : $('#explanation').val()
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/api/bank/transfer',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(data)
+        }).done(function (dat, status, xhr) {
+           alert('성공적으로 송금하였습니다.');
+           window.location.href = '/bank/transfer-after';
+        }).fail(function (error) {
+           const str = error.responseJSON.data;
+           alert(str);
+        });
      }
 };
 

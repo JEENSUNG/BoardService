@@ -1,0 +1,24 @@
+{{>layout/header}}
+<div id="posts_list">
+    <div class="container col-md-4">
+        <form>
+            <div class="form-group">
+                <label>은행</label>
+                <input type="text" name="bankName" id = "bankName" class="form-control"/><br/>
+                <label>계좌번호</label>
+                <input type="text" name="account" id = "account" class="form-control"><br/>
+                <label>이름</label>
+                <input type="text" name="name" id = "name" class="form-control"><br/>
+                <td>
+                    <button type="button" id="btn-bank-check" class="btn btn-secondary">유효한 계좐지 확인</button>
+                </td><br/>
+                <label>이체 금액</label><br/>
+                <input type="text" name="money" id ="money" class="form-control"><span class="mx-2">현재 잔액 : {{bank.money}}</span><br/>
+                <label>설명</label>
+                <input type="text" name = "explanation" id = "explanation" class="form-control">
+            </div>
+            <button type="button" id="btn-bank-transfer" class="btn btn-primary bi bi-pencil-fill">계좌 이체하기</button>
+        </form>
+    </div>
+</div>
+{{>layout/footer}}

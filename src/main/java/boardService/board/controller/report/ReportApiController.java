@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -17,7 +19,7 @@ public class ReportApiController {
     private final ReportService reportService;
 
     @PostMapping("/posts/{pageNum}/report")
-    public ResponseEntity<?> postReport(@PathVariable long pageNum, @RequestBody ReportDto.Request dto, @LoginUser UserDto.Response user){
+    public ResponseEntity<?> postReport(@PathVariable long pageNum, @RequestBody @Valid ReportDto.Request dto, @LoginUser UserDto.Response user){
         if(user == null){
             throw new IllegalArgumentException("접근할 수 없습니다.");
         }

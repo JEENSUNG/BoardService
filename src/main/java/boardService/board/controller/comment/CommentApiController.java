@@ -2,7 +2,7 @@ package boardService.board.controller.comment;
 
 import boardService.board.domain.user.Role;
 import boardService.board.dto.post.CommentDto;
-import boardService.board.dto.Result;
+import boardService.board.dto.util.Result;
 import boardService.board.dto.user.UserDto;
 import boardService.board.security.auth.LoginUser;
 import boardService.board.service.comment.CommentService;
@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class CommentApiController {
     private final CommentService commentService;
 
     @PostMapping("/posts/{id}/comments")
-    public ResponseEntity<?> save(@PathVariable long id, @RequestBody CommentDto.Request dto,
+    public ResponseEntity<?> save(@PathVariable long id, @RequestBody @Valid CommentDto.Request dto,
                                   @LoginUser UserDto.Response userDto, HttpSession httpSession){
         Role now = userDto.getRole();
         long commentId = commentService.save(id, userDto.getNickname(), dto);
@@ -37,7 +38,7 @@ public class CommentApiController {
     }
 
     @PutMapping({"/posts/{id}/comments/{id}"})
-    public ResponseEntity<?> update(@PathVariable long id, @RequestBody CommentDto.Request dto){
+    public ResponseEntity<?> update(@PathVariable long id, @RequestBody @Valid CommentDto.Request dto){
         commentService.update(id, dto);
         return ResponseEntity.ok(id);
     }

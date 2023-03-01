@@ -1,18 +1,17 @@
 package boardService.board.controller.post;
 
 import boardService.board.domain.user.Role;
-import boardService.board.dto.letter.LetterDto;
 import boardService.board.dto.post.PostsDto;
-import boardService.board.dto.Result;
+import boardService.board.dto.util.Result;
 import boardService.board.dto.user.UserDto;
 import boardService.board.security.auth.LoginUser;
 import boardService.board.service.post.PostsService;
-import boardService.board.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class PostsApiController {
     private final PostsService postsService;
 
     @PostMapping("/posts")
-    public ResponseEntity<?> save(@RequestBody PostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
+    public ResponseEntity<?> save(@RequestBody @Valid PostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
         Role now = user.getRole();
         long id = postsService.save(dto, user.getNickname());
         UserDto.Response entity = postsService.session(user.getUsername());
@@ -37,7 +36,7 @@ public class PostsApiController {
     }
 
     @PutMapping("/posts/{id}")
-    public ResponseEntity<?> update(@PathVariable long id, @RequestBody PostsDto.Request dto){
+    public ResponseEntity<?> update(@PathVariable long id, @RequestBody @Valid PostsDto.Request dto){
         postsService.update(id, dto);
         return ResponseEntity.ok(id);
     }

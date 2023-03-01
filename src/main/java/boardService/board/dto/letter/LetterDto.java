@@ -3,6 +3,7 @@ package boardService.board.dto.letter;
 import boardService.board.domain.letter.Letter;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public class LetterDto {
@@ -11,10 +12,12 @@ public class LetterDto {
     @NoArgsConstructor
     @Builder
     public static class Request {
-
+        @NotBlank(message = "제목을 입력해주세요.")
         private String title;
+
         private String sendUsername;
         private String takenUsername;
+        @NotBlank(message = "내용을 입력해주세요.")
         private String content;
         private long toUser;
         private long fromUser;

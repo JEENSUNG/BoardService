@@ -1,7 +1,5 @@
 package boardService.board.controller.secretComment;
 
-import boardService.board.domain.user.Role;
-import boardService.board.dto.Result;
 import boardService.board.dto.user.UserDto;
 import boardService.board.dto.secret.SecretCommentDto;
 import boardService.board.security.auth.LoginUser;
@@ -11,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class SecretCommentApiController {
     private final SecretCommentService secretCommentService;
 
     @PostMapping("/posts/{id}/comments")
-    public ResponseEntity<?> save(@PathVariable long id, @RequestBody SecretCommentDto.Request dto,
+    public ResponseEntity<?> save(@PathVariable long id, @RequestBody @Valid SecretCommentDto.Request dto,
                                   @LoginUser UserDto.Response userDto, HttpSession httpSession){
         long commentId = secretCommentService.save(id, userDto.getNickname(), dto);
         UserDto.Response entity = secretCommentService.session(userDto.getUsername());
@@ -36,7 +35,7 @@ public class SecretCommentApiController {
     }
 
     @PutMapping({"/posts/{id}/comments/{id}"})
-    public ResponseEntity<?> update(@PathVariable long id, @RequestBody SecretCommentDto.Request dto){
+    public ResponseEntity<?> update(@PathVariable long id, @RequestBody @Valid SecretCommentDto.Request dto){
         secretCommentService.update(id, dto);
         return ResponseEntity.ok(id);
     }

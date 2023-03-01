@@ -4,6 +4,7 @@ import boardService.board.domain.post.Posts;
 import boardService.board.domain.user.User;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -18,11 +19,8 @@ public class CommentDto {
     @Builder
     public static class Request {
         private Long id;
+        @NotBlank(message = "내용을 입력해주세요.")
         private String comment;
-//        private String createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
-//        private String modifiedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
-//        private String createdDate;
-//        private String modifiedDate;
         private User user;
         private Posts posts;
         /* Dto -> Entity */

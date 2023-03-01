@@ -4,6 +4,7 @@ import boardService.board.domain.post.Posts;
 import boardService.board.domain.user.User;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,8 +18,10 @@ public class PostsDto {
     public static class Request {
 
         private Long id;
+        @NotBlank(message = "제목을 입력해주세요.")
         private String title;
         private String writer;
+        @NotBlank(message = "내용을 입력해주세요.")
         private String content;
         private String createdDate, modifiedDate;
         private int view;

@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -17,13 +19,13 @@ public class LetterApiController {
 
     @PostMapping("/user/letters/{id}")
     public ResponseEntity<?> save(@PathVariable long pageNum, @PathVariable long id,
-                                  @RequestBody LetterDto.Request dto, @LoginUser UserDto.Response user) {
+                                  @RequestBody @Valid LetterDto.Request dto, @LoginUser UserDto.Response user) {
         return ResponseEntity.ok(letterService.sendLetter(id, user.getId(), dto, pageNum));
     }
 
     @PostMapping("/posts/{pageNum}/letters/{id}")
     public ResponseEntity<?> postsLetters(@PathVariable long pageNum, @PathVariable long id,
-                                          @RequestBody LetterDto.Request dto, @LoginUser UserDto.Response user){
+                                          @RequestBody @Valid LetterDto.Request dto, @LoginUser UserDto.Response user){
         return ResponseEntity.ok(letterService.sendLetter(id, user.getId(), dto, pageNum));
     }
 

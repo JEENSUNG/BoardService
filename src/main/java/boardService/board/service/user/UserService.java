@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import javax.annotation.PostConstruct;
 import java.lang.module.FindException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,21 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
-    private final LetterRepository letterRepository;
+
+    @PostConstruct
+    public void userDBInit(){
+        if(userRepository.count() > 0){
+            return;
+        }
+        String raw = "ADMINADMIN1!";
+        String password = encoder.encode(raw);
+        User user = new User(1L, "ADMIN", "ADMIN", password, "ADMIN@ADMIN.COM", Role.ADMIN, 10000000, true);
+        userRepository.save(user);
+        User user2 = new User(2L, "ADMIN2", "ADMIN2", password, "ADMIN2@ADMIN.COM", Role.ADMIN, 10000000, true);
+        userRepository.save(user2);
+        User user3 = new User(3L, "ADMIN3", "ADMIN3", password, "ADMIN3@ADMIN.COM", Role.ADMIN, 10000000, true);
+        userRepository.save(user3);
+    }
 
     /* 회원가입 */
     @Transactional

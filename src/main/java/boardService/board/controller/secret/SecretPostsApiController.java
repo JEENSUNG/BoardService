@@ -1,17 +1,15 @@
 package boardService.board.controller.secret;
 
-import boardService.board.domain.user.Role;
-import boardService.board.dto.Result;
 import boardService.board.dto.secret.SecretPostsDto;
 import boardService.board.dto.user.UserDto;
 import boardService.board.security.auth.LoginUser;
 import boardService.board.service.secret.SecretPostsService;
-import boardService.board.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +19,7 @@ public class SecretPostsApiController {
     private final SecretPostsService secretPostsService;
 
     @PostMapping("/posts")
-    public ResponseEntity<?> save(@RequestBody SecretPostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
+    public ResponseEntity<?> save(@RequestBody @Valid SecretPostsDto.Request dto, @LoginUser UserDto.Response user, HttpSession httpSession) {
         long id = secretPostsService.save(dto, user.getNickname());
         UserDto.Response entity = secretPostsService.session(user.getUsername());
         httpSession.setAttribute("user", entity);
@@ -34,7 +32,7 @@ public class SecretPostsApiController {
     }
 
     @PutMapping("/posts/{id}")
-    public ResponseEntity<?> update(@PathVariable long id, @RequestBody SecretPostsDto.Request dto){
+    public ResponseEntity<?> update(@PathVariable long id, @RequestBody @Valid SecretPostsDto.Request dto){
         secretPostsService.update(id, dto);
         return ResponseEntity.ok(id);
     }

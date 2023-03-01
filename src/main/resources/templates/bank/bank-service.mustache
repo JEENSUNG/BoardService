@@ -1,0 +1,17 @@
+{{>layout/header}}
+<div id="posts_list">
+    <div class="container col-md-6">
+        <span class="mx-2">안녕하세요! 고객님의 현재 잔액은 {{bank.money}}원입니다.</span>
+        <br/>
+        &nbsp;
+        <br/>
+        <input type="hidden" id="userId" value="{{user.id}}">
+        <span class = "mx-3">고객님의 계좌를 찾기를 원하시면 </span>
+        <button type="button" id="btn-bank-find" class="btn btn-primary bi bi-pencil-fill">계좌 찾기</button>
+        <span class="mx-3">를 눌러주세요</span> <br/>
+        <a href="/bank/transfer" type="button" class="btn btn-secondary bi bi-pencil-fill">계좌 이체</a><br/>
+        <a href="/bank/deposit" type="button" class="btn btn-lg btn-primary btn-block">입금 내역</a><br/>
+        <a href="/bank/withdraw" type="button" class="btn btn-primary pull-right">출금 내역</a><br/>
+    </div>
+</div>
+{{>layout/footer}}

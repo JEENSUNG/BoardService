@@ -20,7 +20,10 @@ public class Bank extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false, unique = true)
+    private Long userId;
+
+    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
@@ -43,5 +46,13 @@ public class Bank extends TimeEntity {
 
     public void setMoney(int money){
         this.money = money;
+    }
+
+    public void setUserId(long userId){
+        this.userId = userId;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 }

@@ -19,11 +19,13 @@ public class BankTransaction extends TimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String bankName;
+    private BankName bankName;
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String toBankName;
+    private BankName toBankName;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String username;
@@ -31,10 +33,10 @@ public class BankTransaction extends TimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String toUsername;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String account;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String toAccount;
 
     @Column(nullable = false)
@@ -42,4 +44,12 @@ public class BankTransaction extends TimeEntity {
 
     @Column(nullable = false)
     private int money;
+
+    public void setBankName(BankName bankName){
+        this.bankName = bankName;
+    }
+
+    public void setToBankName(BankName toBankName){
+        this.toBankName = toBankName;
+    }
 }
