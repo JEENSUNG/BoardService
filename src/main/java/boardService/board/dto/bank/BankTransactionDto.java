@@ -27,7 +27,7 @@ public class BankTransactionDto {
         private String explanation;
 
         @NotBlank(message = "현재 보유 금액 이하의 금액을 입력해주세요.")
-        private int money;
+        private String money;
 
         /* Dto -> Entity */
         public BankTransaction toEntity() {
@@ -40,18 +40,10 @@ public class BankTransactionDto {
         }
     }
     @Getter
-    public static class Response implements Serializable {
-        private final BankName bankName;
-
+    public static class Withdraw implements Serializable {
         private final BankName toBankName;
 
-        private final String username;
-
         private final String toUsername;
-
-        private final String account;
-
-        private final String toAccount;
 
         private final String explanation;
 
@@ -59,13 +51,30 @@ public class BankTransactionDto {
 
         private final int money;
 
-        public Response(BankTransaction bankTransaction) {
-            this.bankName = bankTransaction.getBankName();
+        public Withdraw(BankTransaction bankTransaction) {
             this.toBankName = bankTransaction.getToBankName();
-            this.username = bankTransaction.getUsername();
             this.toUsername = bankTransaction.getToUsername();
-            this.account = bankTransaction.getAccount();
-            this.toAccount = bankTransaction.getToAccount();
+            this.explanation = bankTransaction.getExplanation();
+            this.money = bankTransaction.getMoney();
+            this.createdDate = bankTransaction.getCreatedDate();
+        }
+    }
+
+    @Getter
+    public static class Deposit implements Serializable {
+        private final BankName bankName;
+
+        private final String username;
+
+        private final String explanation;
+
+        private final String createdDate;
+
+        private final int money;
+
+        public Deposit(BankTransaction bankTransaction) {
+            this.bankName = bankTransaction.getBankName();
+            this.username = bankTransaction.getUsername();
             this.explanation = bankTransaction.getExplanation();
             this.money = bankTransaction.getMoney();
             this.createdDate = bankTransaction.getCreatedDate();

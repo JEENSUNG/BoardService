@@ -91,13 +91,23 @@ public class BankApiController {
         if(!bankService.check(check)){
             return new ResponseEntity<>(new ErrorMessage<>("유효하지 않은 계좌입니다."), HttpStatus.BAD_REQUEST);
         }
-        if(dto.getMoney() > bankService.getMoney(user.getId())){
-            return new ResponseEntity<>(new ErrorMessage<>("잔액이 부족합니다."), HttpStatus.CONFLICT);
+        if(bankService.findBankOf(user.getId()).getBankName().equals(BankName.valueOf(dto.getBankName()))){
+            if(Integer.parseInt(dto.getMoney()) > bankService.getMoney(user.getId())){
+                return new ResponseEntity<>(new ErrorMessage<>("잔액이 부족합니다."), HttpStatus.CONFLICT);
+            }
+            bankService.transfer(user.getId(), dto);
+            UserDto.Response entity = bankService.session(user.getUsername());
+            httpSession.setAttribute("user", entity);
+            return ResponseEntity.ok(new Result<>("success"));
+        }else{
+            if(Integer.parseInt(dto.getMoney()) + 1500 > bankService.getMoney(user.getId())){
+                return new ResponseEntity<>(new ErrorMessage<>("잔액이 부족합니다."), HttpStatus.CONFLICT);
+            }
+            bankService.transferPlus(user.getId(), dto);
+            UserDto.Response entity = bankService.session(user.getUsername());
+            httpSession.setAttribute("user", entity);
+            return ResponseEntity.ok(new Result<>(1));
         }
-        bankService.transfer(user.getId(), dto);
-        UserDto.Response entity = bankService.session(user.getUsername());
-        httpSession.setAttribute("user", entity);
-        return ResponseEntity.ok(new Result<>("success"));
     }
 
     @PostMapping("/check")

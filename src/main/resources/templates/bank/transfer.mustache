@@ -3,14 +3,15 @@
     <div class="container col-md-4">
         <form>
             <div class="form-group">
-                <label>은행</label>
+                <span class="mx-2">은행 지점이 다를 경우 수수료 1500원이 발생합니다!</span><br/>
+                <label>은행명</label>
                 <input type="text" name="bankName" id = "bankName" class="form-control"/><br/>
                 <label>계좌번호</label>
                 <input type="text" name="account" id = "account" class="form-control"><br/>
                 <label>이름</label>
                 <input type="text" name="name" id = "name" class="form-control"><br/>
                 <td>
-                    <button type="button" id="btn-bank-check" class="btn btn-secondary">유효한 계좐지 확인</button>
+                    <button type="button" id="btn-bank-check" class="btn btn-secondary">유효한 계좌인지 확인</button>
                 </td><br/>
                 <label>이체 금액</label><br/>
                 <input type="text" name="money" id ="money" class="form-control"><span class="mx-2">현재 잔액 : {{bank.money}}</span><br/>

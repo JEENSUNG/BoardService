@@ -11,6 +11,8 @@ import boardService.board.repository.bank.BankRepository;
 import boardService.board.repository.bank.BankTransactionRepository;
 import boardService.board.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,13 +99,13 @@ public class BankService {
 
     @Transactional(readOnly = true)
     public boolean findBank(Long id) {
-        Optional<Bank> bank = bankRepository.findById(id);
+        Optional<Bank> bank = bankRepository.findByUserId(id);
         return bank.isPresent();
     }
 
     @Transactional(readOnly = true)
     public BankDto.Response findUser(Long id) {
-        Bank bank = bankRepository.findById(id).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
+        Bank bank = bankRepository.findByUserId(id).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
         return new BankDto.Response(bank);
     }
 
@@ -120,7 +122,7 @@ public class BankService {
 
     @Transactional
     public void startTransaction(Long id, BankName bankName) {
-        Bank bank = bankRepository.findById(id).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
+        Bank bank = bankRepository.findByUserId(id).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
         User user = userRepository.findById(id).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
         Bank adminBank = bankRepository.findTop1ByBankName(bankName);
         BankTransaction bankTransaction = BankTransaction.builder()
@@ -153,7 +155,7 @@ public class BankService {
         BankTransaction bankTransaction = BankTransaction.builder()
                 .bankName(bank.getBankName())
                 .toBankName(BankName.valueOf(dto.getBankName()))
-                .money(dto.getMoney())
+                .money(Integer.parseInt(dto.getMoney()))
                 .account(bank.getAccount())
                 .toAccount(dto.getAccount())
                 .explanation(dto.getExplanation())
@@ -161,13 +163,47 @@ public class BankService {
                 .toUsername(dto.getUsername())
                 .build();
         bankTransactionRepository.save(bankTransaction);
-        bank.setMoney(bank.getMoney() - dto.getMoney());
-        bank2.setMoney(bank2.getMoney() + dto.getMoney());
+        bank.setMoney(bank.getMoney() - Integer.parseInt(dto.getMoney()));
+        bank2.setMoney(bank2.getMoney() + Integer.parseInt(dto.getMoney()));
     }
 
     @Transactional(readOnly = true)
     public int getMoney(Long id) {
         Bank bank = bankRepository.findByUserId(id).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
         return bank.getMoney();
+    }
+
+    @Transactional
+    public void transferPlus(Long id, BankTransactionDto.Request dto) {
+        User user = userRepository.findById(id).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
+        Bank bank = bankRepository.findByUserId(user.getId()).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
+        Bank bank2 = bankRepository.findByAccount(dto.getAccount()).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
+        BankTransaction bankTransaction = BankTransaction.builder()
+                .bankName(bank.getBankName())
+                .toBankName(BankName.valueOf(dto.getBankName()))
+                .money(Integer.parseInt(dto.getMoney()))
+                .account(bank.getAccount())
+                .toAccount(dto.getAccount())
+                .explanation(dto.getExplanation())
+                .username(user.getNickname())
+                .toUsername(dto.getUsername())
+                .build();
+        bankTransactionRepository.save(bankTransaction);
+        bank.setMoney(bank.getMoney() - Integer.parseInt(dto.getMoney()) - 1500);
+        bank2.setMoney(bank2.getMoney() + Integer.parseInt(dto.getMoney()));
+        Bank adminBank = bankRepository.findTop1ByBankName(bank.getBankName());
+        adminBank.setMoney(adminBank.getMoney() + 1500);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<BankTransaction> withdraw(long id, Pageable pageable) {
+        Bank bank = bankRepository.findByUserId(id).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
+        return bankTransactionRepository.findAllByAccount(bank.getAccount(), pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<BankTransaction> deposit(Long id, Pageable pageable) {
+        Bank bank = bankRepository.findByUserId(id).orElseThrow(() -> new FindException("찾을 수 없는 회원입니다."));
+        return bankTransactionRepository.findAllByToAccount(bank.getAccount(), pageable);
     }
 }

@@ -1,12 +1,29 @@
 {{>layout/header}}
+
 <div id="posts_list">
-    <div class="container col-md-6">
-        <span class="mx-2">은행 이용이 처음이시라면 계좌를 등록 해보세요! </span>
-        &nbsp;
-        <br/>
-        <a href="/bank/join/bnk" role="button" class="mx-2">부산 은행 가입</a>
-        <a href="/bank/join/knb" role="button" class="mx-2">경남 은행 가입</a>
-        <a href="/bank/join/ibk" role="button" class="mx-2">기업 은행 가입</a>
-    </div>
+    <table id="table" class="table table-horizontal">
+        <thead id="thead">
+        <tr>
+            <th>은행명</th>
+            <th>보낸사람</th>
+            <th class="col-md-6 text-center">설명</th>
+            <th>금액</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#pages}}
+            <tr>
+                <td>{{bankName}}</td>
+                <td>{{username}}</a></td>
+                <td class="col-md-6 text-center">{{explanation}}</td>
+                <td>{{money}}</td>
+                <td>{{createdDate}}</td>
+            </tr>
+        {{/pages}}
+        </tbody>
+    </table>
+    {{! Page }}
+    {{>posts/posts-page}}
 </div>
 {{>layout/footer}}

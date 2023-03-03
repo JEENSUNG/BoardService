@@ -1,12 +1,19 @@
 package boardService.board.controller.bank;
 
 import boardService.board.domain.bank.Bank;
+import boardService.board.domain.bank.BankTransaction;
 import boardService.board.domain.user.User;
 import boardService.board.dto.bank.BankDto;
+import boardService.board.dto.bank.BankTransactionDto;
 import boardService.board.dto.user.UserDto;
 import boardService.board.security.auth.LoginUser;
 import boardService.board.service.bank.BankService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +67,7 @@ public class BankController {
 
     @GetMapping("/bank/welcome/bnk")
     public String welcomeBnk(@LoginUser UserDto.Response user, Model model){
-        if(user == null){
+        if(user == null || !user.isBank()){
             throw new IllegalArgumentException("접근할 수 없습니다.");
         }
         BankDto.Response bank = bankService.findUser(user.getId());
@@ -71,7 +78,7 @@ public class BankController {
 
     @GetMapping("/bank/welcome/knb")
     public String welcomeKnb(@LoginUser UserDto.Response user, Model model){
-        if(user == null){
+        if(user == null || !user.isBank()){
             throw new IllegalArgumentException("접근할 수 없습니다.");
         }
         BankDto.Response bank = bankService.findUser(user.getId());
@@ -82,7 +89,7 @@ public class BankController {
 
     @GetMapping("/bank/welcome/ibk")
     public String welcomeIbk(@LoginUser UserDto.Response user, Model model){
-        if(user == null){
+        if(user == null || !user.isBank()){
             throw new IllegalArgumentException("접근할 수 없습니다.");
         }
         BankDto.Response bank = bankService.findUser(user.getId());
@@ -93,7 +100,7 @@ public class BankController {
 
     @GetMapping("/bank/transfer")
     public String transfer(@LoginUser UserDto.Response user, Model model){
-        if(user == null){
+        if(user == null || !user.isBank()){
             throw new IllegalArgumentException("접근할 수 없습니다.");
         }
         Bank bank = bankService.findBankOf(user.getId());
@@ -103,19 +110,37 @@ public class BankController {
     }
 
     @GetMapping("/bank/withdraw")
-    public String withdraw(@LoginUser UserDto.Response user, Model model){
-        if(user == null){
+    public String withdraw(@LoginUser UserDto.Response user, Model model, @PageableDefault @SortDefault.SortDefaults({
+            @SortDefault(sort = "createdDate", direction = Sort.Direction.DESC)}) Pageable pageable){
+        if(user == null || !user.isBank()){
             throw new IllegalArgumentException("접근할 수 없습니다.");
         }
+        Page<BankTransaction> pages = bankService.withdraw(user.getId(), pageable);
+        model.addAttribute("size", pages.getTotalElements());
+        model.addAttribute("reports", pages);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", pages.hasNext());
+        model.addAttribute("hasPrev", pages.hasPrevious());
+        model.addAttribute("pages", pages);
         model.addAttribute("user", user);
         return "bank/withdraw";
     }
 
     @GetMapping("/bank/deposit")
-    public String deposit(@LoginUser UserDto.Response user, Model model){
-        if(user == null){
+    public String deposit(@LoginUser UserDto.Response user, Model model, @PageableDefault @SortDefault.SortDefaults({
+            @SortDefault(sort = "createdDate", direction = Sort.Direction.DESC)}) Pageable pageable){
+        if(user == null || !user.isBank()){
             throw new IllegalArgumentException("접근할 수 없습니다.");
         }
+        Page<BankTransaction> pages = bankService.deposit(user.getId(), pageable);
+        model.addAttribute("size", pages.getTotalElements());
+        model.addAttribute("reports", pages);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", pages.hasNext());
+        model.addAttribute("hasPrev", pages.hasPrevious());
+        model.addAttribute("pages", pages);
         model.addAttribute("user", user);
         return "bank/deposit";
     }
