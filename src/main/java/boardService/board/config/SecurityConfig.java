@@ -44,7 +44,7 @@ public class SecurityConfig {
         httpSecurity.csrf().ignoringAntMatchers("/api/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/auth/**", "/posts/read/**", "/posts/search/**").permitAll()
+                .antMatchers("/user/password-modify/**","/user/find/**","/", "/auth/**", "/posts/read/**", "/posts/search/**").permitAll()
                 .antMatchers("/secrets/**").access("hasRole('SOCIAL_VIP') or hasRole('USER_VIP')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()

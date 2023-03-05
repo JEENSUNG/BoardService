@@ -68,4 +68,8 @@ public class User extends TimeEntity {
     public String getRoleValue() {
         return this.role.getValue();
     }
+
+    public void setUserPassword(String password){
+        this.password = password;
+    }
 }

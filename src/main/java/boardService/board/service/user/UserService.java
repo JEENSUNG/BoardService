@@ -86,4 +86,23 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
         return user.getNickname();
     }
+
+    @Transactional(readOnly = true)
+    public boolean userFind(UserDto.Find dto) {
+        return userRepository.findByUsername(dto.getUsername()).isPresent()
+                && userRepository.findByEmail(dto.getEmail()).isPresent();
+    }
+
+    @Transactional(readOnly = true)
+    public long findUser(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
+        return user.getId();
+    }
+
+    @Transactional
+    public void passwordModify(long id, UserDto.Password dto) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
+        user.setUserPassword(encoder.encode(dto.getPassword1()));
+        userRepository.save(user);
+    }
 }

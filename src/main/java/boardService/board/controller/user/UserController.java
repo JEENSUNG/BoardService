@@ -120,4 +120,13 @@ public class UserController {
         return "user/user-list";
     }
 
+    @GetMapping("/user/find")
+    public String userFind(){
+        return "user/user-find";
+    }
+
+    @GetMapping("/user/password-modify")
+    public String passwordModify() {
+        return "user/password-modify";
+    }
 }
