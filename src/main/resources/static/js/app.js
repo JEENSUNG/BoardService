@@ -943,49 +943,60 @@ const main = {
            alert(str);
         });
      },
-     userFind : function (){
-          const data = {
-              username: $('#username').val(),
-              email: $('#email').val()
-          };
-          if (!data.username || data.username.trim() === "" || !data.email || data.email.trim() === "") {
-              alert('공백 또는 입력하지 않은 부분이 있습니다.');
-              return false;
-          }else {
-               $.ajax({
-                   type: 'POST',
-                   url: '/api/user/find',
-                   contentType: 'application/json; charset=utf-8',
-                   data: JSON.stringify(data)
-               }).done(function (dat, status, xhr) {
-                   alert('등록되었습니다.');
-                   window.location.href = '/user/password-modify';
-               }).fail(function (error) {
-                   alert(JSON.stringify(error.data));
-               });
+     userFind : function () {
+           const data = {
+               username: $('#username').val(),
+               email: $('#email').val()
+           };
+           if (!data.username || data.username.trim() === "" || !data.email || data.email.trim() === "") {
+               alert('공백 또는 입력하지 않은 부분이 있습니다.');
+               return false;
+           }else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/user/find',
+                    dataType: 'JSON',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+                }).done(function (xhr) {
+                    alert('정상적으로 인증되었습니다.' + '\n' + '비밀번호 변경을 위해 다음 페이지로 넘어갑니다.');
+                    window.location.href = '/user/password-modify/' + xhr.data;
+                }).fail(function (error) {
+                    const str = error.responseJSON.data;
+                    alert(str);
+                });
            }
-      },
+       },
 
      passwordModify : function () {
           const data = {
               password1: $('#password1').val(),
-              password2: $('#password2').val()
+              password2: $('#password2').val(),
+              id : $('#id').val()
           };
           if (!data.password1 || data.password1.trim() === "" || !data.password2 || data.password2.trim() === "") {
                alert('공백 또는 입력하지 않은 부분이 있습니다.');
                return false;
-           }else{
+           }else if(!/(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,16}/.test(data.password1)) {
+               alert("비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
+               $('#password1').focus();
+           }else if(!/(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,16}/.test(data.password2)) {
+               alert("비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
+               $('#password2').focus();
+           }
+           else{
               $.ajax({
                   type: 'PUT',
-                  url: '/api/user/password-modify',
+                  url: '/api/user/password-modify/' + data.id,
                   dataType: 'JSON',
                   contentType: 'application/json; charset=utf-8',
                   data: JSON.stringify(data)
-              }).done(function () {
+              }).done(function (xhr) {
                    alert('성공적으로 비밀번호가 변경되었습니다.');
-                   window.location.href = '/user/login';
+                   window.location.href = '/auth/login';
               }).fail(function (error) {
-                  alert(JSON.stringify(error));
+                  const str = error.responseJSON.data;
+                  alert(str);
               });
           }
      }

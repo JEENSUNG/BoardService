@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
 @RestController
+@RequestMapping("/api/user")
 public class UserApiController {
 
     private final UserService userService;
@@ -34,11 +34,11 @@ public class UserApiController {
 
     @PostMapping("/find")
     public ResponseEntity<?> userFind(@RequestBody @Valid UserDto.Find dto){
-        System.out.println(3333333);
+        System.out.println(dto.getUsername());
         if(userService.userFind(dto)){
             return ResponseEntity.ok(new Result<>(userService.findUser(dto.getUsername())));
         }
-        return new ResponseEntity<>(new ErrorMessage<>("찾을 수 없는 회원입니다."), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorMessage<>("찾을 수 없는 회원입니다. 다시 시도해주세요"), HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/password-modify/{id}")
@@ -47,6 +47,6 @@ public class UserApiController {
             return new ResponseEntity<>(new ErrorMessage<>("비밀번호가 서로 다릅니다."), HttpStatus.BAD_REQUEST);
         }
         userService.passwordModify(id, dto);
-        return ResponseEntity.ok("success");
+        return ResponseEntity.ok(new Result<>("success"));
     }
 }

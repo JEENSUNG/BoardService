@@ -121,12 +121,15 @@ public class UserController {
     }
 
     @GetMapping("/user/find")
-    public String userFind(){
+    public String userFind(@LoginUser UserDto.Response user, Model model){
+        model.addAttribute("user", user);
         return "user/user-find";
     }
 
-    @GetMapping("/user/password-modify")
-    public String passwordModify() {
+    @GetMapping("/user/password-modify/{id}")
+    public String passwordModify(@PathVariable long id, @LoginUser UserDto.Response user, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("id", id);
         return "user/password-modify";
     }
 }

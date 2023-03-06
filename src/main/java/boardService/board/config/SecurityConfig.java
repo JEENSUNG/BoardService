@@ -4,6 +4,8 @@ import boardService.board.security.oauth.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
@@ -22,7 +25,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
     private final AuthenticationFailureHandler authenticationFailureHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
-
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
@@ -41,10 +43,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
-        httpSecurity.csrf().ignoringAntMatchers("/api/**")
-                .and()
+        httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/password-modify/**","/user/find/**","/", "/auth/**", "/posts/read/**", "/posts/search/**").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/api/user/find").anonymous()
+                .mvcMatchers(HttpMethod.PUT, "/api/user/password-modify/**").anonymous()
+                .antMatchers("/user/**", "/auth/**", "/posts/read/**", "/posts/search/**").permitAll()
                 .antMatchers("/secrets/**").access("hasRole('SOCIAL_VIP') or hasRole('USER_VIP')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .anyRequest().authenticated()

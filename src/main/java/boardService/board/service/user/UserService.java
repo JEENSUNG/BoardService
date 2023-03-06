@@ -103,6 +103,5 @@ public class UserService {
     public void passwordModify(long id, UserDto.Password dto) {
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
         user.setUserPassword(encoder.encode(dto.getPassword1()));
-        userRepository.save(user);
     }
 }
