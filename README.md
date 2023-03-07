@@ -327,4 +327,7 @@ https://www.notion.so/6-e8de440614224155b6e79c13f79f79e6
 
 # 7. 에러 사항 및 해결법과 고민들
 https://www.notion.so/43dd746d01cd45d2824339b361442c34?v=c58ec3dec8aa4497ad00a08cb41a67c1
+![image](https://user-images.githubusercontent.com/61839458/223415930-5c054aa6-87a9-4fed-bc35-e87761460607.png)
+![image](https://user-images.githubusercontent.com/61839458/223415959-eb4c6c73-914f-4c0d-b171-9e295ddb60ea.png)
+
 
