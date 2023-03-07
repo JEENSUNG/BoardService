@@ -163,26 +163,75 @@ https://www.notion.so/5-API-85fc5b625484446bbc3bea6631401058
 ![image](https://user-images.githubusercontent.com/61839458/223394218-192472d0-ee39-41a1-8a95-5f8d08f56c70.png)
 ![image](https://user-images.githubusercontent.com/61839458/223394379-c92afd8d-523d-408e-b0f8-1e39619acb4d.png)
 
-![Uploading image.png…]()
-
-
-# 6. 화면설계서
+# 6. 화면설계서 (와이어 프레임)
 https://www.notion.so/6-e8de440614224155b6e79c13f79f79e6
 
-![image](https://user-images.githubusercontent.com/61839458/218073836-e765ad5d-4160-41da-a573-927fc85bddaf.png)
-![image](https://user-images.githubusercontent.com/61839458/218073877-33dfdf5f-a8f3-416a-920b-24afdfe1efeb.png)
-![image](https://user-images.githubusercontent.com/61839458/218073927-4aaf5543-25dd-4992-9ce5-33a114d8e9b0.png)
-![image](https://user-images.githubusercontent.com/61839458/218073998-e8335a0b-ca79-4278-8c5e-9face658d86c.png)
-![image](https://user-images.githubusercontent.com/61839458/218074046-dc8aaa2b-f88f-485b-8b3e-71f18356c8a6.png)
-![image](https://user-images.githubusercontent.com/61839458/218074084-4afc326b-5291-4334-b81b-8293a21ccc16.png)
-![image](https://user-images.githubusercontent.com/61839458/218074108-edf6d537-f920-4fdd-85f2-fc83429bed18.png)
-![image](https://user-images.githubusercontent.com/61839458/218074145-d2d67547-2350-43ea-8927-37cc30eed4e9.png)
-![image](https://user-images.githubusercontent.com/61839458/218074189-a6c7b64d-7af5-49b2-a0da-529a965d2f4d.png)
-![image](https://user-images.githubusercontent.com/61839458/218074230-9a6ec9b6-63ec-4eaf-9b9a-42dc4d721d26.png)
-![image](https://user-images.githubusercontent.com/61839458/218074265-88aa69b9-f29a-48bf-b215-9f24eff9eeb4.png)
-![image](https://user-images.githubusercontent.com/61839458/218074297-03801897-316e-407c-85b8-4c1ace06f186.png)
-![image](https://user-images.githubusercontent.com/61839458/218074332-8286f85d-2df3-40be-a8b9-a7882446505d.png)
-![image](https://user-images.githubusercontent.com/61839458/218074369-41da7397-f4a7-4770-8e49-2c39483cdda3.png)
+1. 첫 홈 화면 로그인 페이지
+![image](https://user-images.githubusercontent.com/61839458/223395939-6d8f2748-dbad-465d-a7ea-fe3aab063f21.png)
+
+2. 회원가입 페이지
+![image](https://user-images.githubusercontent.com/61839458/223396098-0acb2a47-2ffb-4790-b731-988540750175.png)
+
+3. 로그인 후 메인 페이지
+![image](https://user-images.githubusercontent.com/61839458/223396722-8123b967-7417-4e17-b721-81b389c221a1.png)
+
+4. 게시글 작성 페이지
+![image](https://user-images.githubusercontent.com/61839458/223396838-6a2f8516-66ec-4313-85e2-4b8eb96ea0bd.png)
+
+5. 게시글 작성 후 페이지
+![image](https://user-images.githubusercontent.com/61839458/223397543-46fbdf1a-72aa-4305-a7b6-9fe886513a3c.png)
+
+6. 게시글 추천 / 비추천
+![image](https://user-images.githubusercontent.com/61839458/223397690-3583d0ae-091e-4928-9a57-75ce048d1162.png)
+
+7. 게시글 추천 취소
+![image](https://user-images.githubusercontent.com/61839458/223397770-1dc40da0-34b7-4da2-b9e4-5fe3d520c0ed.png)
+
+8. 댓글 작성 후 페이지
+![image](https://user-images.githubusercontent.com/61839458/223397937-f811ff9a-017c-4c9d-962e-4bf82de3aecd.png)
+
+9. 게시글 수정
+![image](https://user-images.githubusercontent.com/61839458/223398007-27007722-8931-4402-aaed-b1cc8b3d3ce2.png)
+
+10. 수정된 게시글
+![image](https://user-images.githubusercontent.com/61839458/223398087-f1c0848c-6154-4ef9-af93-aa7db7ac2752.png)
+
+11. 게시글 삭제 안내
+![image](https://user-images.githubusercontent.com/61839458/223398225-7ae5692e-37bd-415d-bcd4-7298723b6170.png)
+
+12. 삭제 후 페이지
+![image](https://user-images.githubusercontent.com/61839458/223399128-5e1865bb-13a4-4f5e-9216-bed71a2aed7f.png)
+(작성하고 보니 댓글이 같이 삭제될 때 포인트 차감을 해야겠다..)
+
+13. 인기 게시판 조회 (추천 -> 조회 -> 생성일순)
+![image](https://user-images.githubusercontent.com/61839458/223399532-9653ad50-091f-4013-97fb-35f291707415.png)
+
+14. 회원정보 페이지
+![image](https://user-images.githubusercontent.com/61839458/223399673-5698643f-81d0-40b6-9a1b-65436e532963.png)
+
+15. 회원정보 수정
+![image](https://user-images.githubusercontent.com/61839458/223399776-7c49ed0f-fa85-4ebb-96db-23e198128c78.png)
+
+16. '인' 이라는 단어를 검색하기 전 페이지 정렬
+![image](https://user-images.githubusercontent.com/61839458/223399958-fc8cc366-2ea7-4c91-860d-5a12649d1fdf.png)
+
+17. 검색 후 페이지 정렬
+![image](https://user-images.githubusercontent.com/61839458/223400047-1a8fe6a0-d4a9-45d3-bde9-ddb318cfd499.png)
+
+18. 검색어 순위 상위 10개 정렬
+![image](https://user-images.githubusercontent.com/61839458/223400325-b317cc5c-2d93-4ba5-a04c-7601899bea84.png)
+
+19. 유저 목록 페이지
+![image](https://user-images.githubusercontent.com/61839458/223400405-3d2e8e3c-87ca-4348-85cc-4de563bb1a06.png)
+
+20. 유저 목록에서 쪽지 보내기
+![image](https://user-images.githubusercontent.com/61839458/223400524-ba07a92a-223e-4b03-9ef5-d4074689a452.png)
+
+21. 
+
+
+
+
 
 # 7. 에러 사항 및 해결법과 고민들
 https://www.notion.so/43dd746d01cd45d2824339b361442c34?v=c58ec3dec8aa4497ad00a08cb41a67c1
