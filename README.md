@@ -227,7 +227,99 @@ https://www.notion.so/6-e8de440614224155b6e79c13f79f79e6
 20. 유저 목록에서 쪽지 보내기
 ![image](https://user-images.githubusercontent.com/61839458/223400524-ba07a92a-223e-4b03-9ef5-d4074689a452.png)
 
-21. 
+21. 쪽지 보내기 페이지
+![image](https://user-images.githubusercontent.com/61839458/223403891-7616ee28-667e-41e4-b18a-5eb5c3e57c4a.png)
+
+22. 보낸 쪽지 조회
+![image](https://user-images.githubusercontent.com/61839458/223404255-a0ba6280-f06c-4cf1-b959-2e50a3d7a743.png)
+
+23. 보낸 쪽지 상세 페이지
+![image](https://user-images.githubusercontent.com/61839458/223404396-858582d8-0d97-4763-869c-40b5a1637a19.png)
+
+24. 쪽지 삭제
+![image](https://user-images.githubusercontent.com/61839458/223404497-b5285848-3245-4730-88de-d5d4412d27a8.png)
+
+25. 사용자의 UX에서는 삭제되지만 DB에는 그대로 잔재
+![image](https://user-images.githubusercontent.com/61839458/223404638-69128cd9-4346-42aa-a119-fca0c65c9c18.png)
+
+26. 비밀게시판 접근
+![image](https://user-images.githubusercontent.com/61839458/223404823-beba7e17-50a9-41c7-baa8-045d56f870e9.png)
+
+27. 비밀게시판 게시글 작성 후 페이지
+![image](https://user-images.githubusercontent.com/61839458/223406637-34aae80b-382f-4568-b755-779c25d322ea.png)
+
+28. 은행 첫 이용페이지
+![image](https://user-images.githubusercontent.com/61839458/223406984-a0b1db2f-d5ff-4d7c-8fd6-8e6d476d1fea.png)
+
+29. 은행 계좌 개설 및 이름 유효성 검사
+![image](https://user-images.githubusercontent.com/61839458/223407056-a945ac80-e438-4972-b492-aa20d211f9b6.png)
+(뭔가를 더 입력 받고 싶은데 마땅히 받을 요소가 없음.....)
+
+30. 유효성 검사
+![image](https://user-images.githubusercontent.com/61839458/223407263-6980aef6-c786-4edc-b95d-5f701ad2497a.png)
+
+31. 계좌 개설 후 페이지
+![image](https://user-images.githubusercontent.com/61839458/223407343-8102cc56-71b8-4525-bf31-c5343e42fe72.png)
+
+32. 개설 축하금 입금 내역 확인
+![image](https://user-images.githubusercontent.com/61839458/223407448-c3694135-967b-4e66-95e5-2934c0bf5797.png)
+
+33. 계좌이체 페이지
+![image](https://user-images.githubusercontent.com/61839458/223407539-7988b68b-62fd-4ead-9462-6bab07d96fe0.png)
+
+34. 유효하지 않은 계좌 번호 또는 은행명 또는 사용자명을 입력시 안내 메시지
+![image](https://user-images.githubusercontent.com/61839458/223407711-09538f97-eb2d-41a6-8868-378bcf18f344.png)
+
+35. 세 개의 입력 정보가 모두 유효한 정보면 뜨는 안내 메시지
+![image](https://user-images.githubusercontent.com/61839458/223407850-ce95ba49-0066-43f7-a41a-abfea70f4d3a.png)
+
+36. 잔액 부족일 경우 뜨는 안내 메시지
+![image](https://user-images.githubusercontent.com/61839458/223407940-05e657a6-d747-45e6-bb8c-5f4c95e9fa72.png)
+
+37. 이체 성공할 경우 뜨는 안내 메시지
+![image](https://user-images.githubusercontent.com/61839458/223408038-d73e602e-2eb4-4355-828b-f852256bb55b.png)
+
+38. 이체 성공 후 이동하는 페이지
+![image](https://user-images.githubusercontent.com/61839458/223408120-c9a7ac2c-4dee-4cc0-bacc-e9a5175bfa60.png)
+
+39. 게시글 신고 페이지
+![image](https://user-images.githubusercontent.com/61839458/223408251-42ae58dd-e100-4067-9702-4bca07835887.png)
+
+40. 신고 목록 조회하기(ADMIN 전용 페이지)
+![image](https://user-images.githubusercontent.com/61839458/223408320-f0d2d1c5-f5e9-4cdc-914f-09929261c688.png)
+
+41. 신고 내역 상세 조회하기(ADMIN 전용 페이지)
+![image](https://user-images.githubusercontent.com/61839458/223408432-4bf6f9fa-9fa8-4955-a384-5c1caada25a5.png)
+
+42. 포인트 회수하기
+![image](https://user-images.githubusercontent.com/61839458/223408536-7e99272d-836a-4c5c-8fe2-cb99e40e3abf.png)
+
+43. 포인트 회수 후 0원된 포인트 (회원 등급은 VIP -> 일반 유저로 강등)
+![image](https://user-images.githubusercontent.com/61839458/223408673-e6c09523-96f4-47d9-9fbc-54ad83f21721.png)
+
+44. 비밀번호 찾기 페이지
+![image](https://user-images.githubusercontent.com/61839458/223408824-10cfc44b-077f-433e-afd3-be5c787f0e4b.png)
+
+45. 유효성 검사 실패시 뜨는 안내 메세지
+![image](https://user-images.githubusercontent.com/61839458/223408899-86d21f7f-56c8-4eda-a8c8-776cbb915fc5.png)
+
+46. 회원 유효성 검사 통과 후 뜨는 안내 메세지
+![image](https://user-images.githubusercontent.com/61839458/223410288-f1d55ed7-8a87-4221-a20b-ffb636edfbd5.png)
+
+47. 비밀번호 변경 시 이전의 비밀번호와 같은 비밀번호 입력 시 뜨는 안내 메세지
+![image](https://user-images.githubusercontent.com/61839458/223410430-ba1f2017-f2ff-4183-b932-90af676a44c6.png)
+
+48. 비밀번호가 서로 다를경우 뜨는 안내 메세지
+![image](https://user-images.githubusercontent.com/61839458/223410896-08c6674d-8415-47cb-aa61-2fc7f189193b.png)
+
+49.유효성 검사 통과 후 비밀번호 변경
+![image](https://user-images.githubusercontent.com/61839458/223411096-9412fb5e-ce80-4248-8971-2a32d5f8f770.png)
+
+
+
+
+
+
 
 
 
@@ -235,5 +327,4 @@ https://www.notion.so/6-e8de440614224155b6e79c13f79f79e6
 
 # 7. 에러 사항 및 해결법과 고민들
 https://www.notion.so/43dd746d01cd45d2824339b361442c34?v=c58ec3dec8aa4497ad00a08cb41a67c1
-![image](https://user-images.githubusercontent.com/61839458/218074736-530576f8-3f86-4b5f-a7ca-37028fe637ae.png)
 
