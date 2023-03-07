@@ -951,7 +951,17 @@ const main = {
            if (!data.username || data.username.trim() === "" || !data.email || data.email.trim() === "") {
                alert('공백 또는 입력하지 않은 부분이 있습니다.');
                return false;
-           }else {
+           }else if(!/^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$/.test(data.username)) {
+                alert("아이디는 특수문자를 제외한 2~10자리여야 합니다.");
+                $('#username').focus();
+                return false;
+           }
+           else if(!/^(?:\w+\.?)*\w+@(?:\w+\.)+\w+$/.test(data.email)) {
+                alert("이메일은 특수문자를 제외한 2~10자리여야 합니다.");
+                $('#email').focus();
+                return false;
+           }
+           else {
                 $.ajax({
                     type: 'POST',
                     url: '/api/user/find',

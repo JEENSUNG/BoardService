@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 import java.lang.module.FindException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -103,5 +104,11 @@ public class UserService {
     public void passwordModify(long id, UserDto.Password dto) {
         User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
         user.setUserPassword(encoder.encode(dto.getPassword1()));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean passwordCheck(long id, String password1) {
+        Optional<User> user = userRepository.findById(id);
+        return user.isPresent() && encoder.matches(password1, user.get().getPassword());
     }
 }
